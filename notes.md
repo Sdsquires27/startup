@@ -8,6 +8,10 @@
 - [Canvas](https://byu.instructure.com)
 - [MDN](https://developer.mozilla.org)
 
+## Unit Notes
+- [Google Docs](https://docs.google.com/document/d/1XpXUGv5KVJ9QYtvr1PP064hiIasfq4PtMAP1Pm6ZnTg/edit?tab=t.0)
+- [Unit 0](unit-0.md)
+
 ## AWS
 
 My IP address is: 54.81.96.130

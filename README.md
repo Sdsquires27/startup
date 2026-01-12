@@ -1,9 +1,8 @@
-# Your startup name here
+# Registry
 
 [My Notes](notes.md)
 
-A brief description of the application here. Since I don't know what I will make yet, I am just writing in a few things.
-
+A registry which will allow people to make a list of things they want, then see what other people want and claim them in order to purchase them as gifts.
 
 > [!NOTE]
 >  This is a template for your startup application. You must modify this `README.md` file for each phase of your development. You only need to fill in the section for each deliverable when that deliverable is submitted in Canvas. Without completing the section for a deliverable, the TA will not know what to look for when grading your submission. Feel free to add additional information to each deliverable description, but make sure you at least have the list of rubric items and a description of what you did for each item.
@@ -18,45 +17,52 @@ A brief description of the application here. Since I don't know what I will make
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] Proper use of Markdown
-- [ ] A concise and compelling elevator pitch
-- [ ] Description of key features
-- [ ] Description of how you will use each technology
-- [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+- [x] Proper use of Markdown - I read the GitHub page and everything.
+- [x] A concise and compelling elevator pitch
+- [x] Description of key features
+- [x] Description of how you will use each technology
+- [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+For many, gift giving--and receiving--isn't as fun as others make it out to be. It can be hard to pick out the right gift for a person, and it is all too common that someone receieves a gift that they didn't want or need--or, yet worse, they receive something that they already had! The Registry application simplifies this process: people will be able to create lists of things that they want as gifts and others will be able to view and claim these gifts to buy. Think of it as somehwat similar to other registries, but constantly up and ready to be used. This ensures that one can purchase the gifts that their friends and family actually want.
 
 ### Design
 
-![Design image](placeholder.png)
+![Design image](YourRegistry.png)
+![Design image](OtherRegistry.png)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-```mermaid
-sequenceDiagram
-    actor You
-    actor Website
-    You->>Website: Replace this with your design
-```
+These images display mockups for two of the most essential and unique aspects of this application. The first shows the creation of one's own registry, which can have a variety of gifts that one adds to. The second shows someone viewing another user's registry. There are different icons to demonstrate if the item is available, claimed by the logged in user, or claimed by another user, a list of claimed items, and a list of items which one may have claimed previously but which the viewed user has since removed from their registry.
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Secure login over HTTPS
+- Secure account creation
+- Ability to add and remove items from personal registry
+- Registries stored in database
+- Ability to search for other users
+- View other users' registries
+- Claim certain items from other users registries
+- Mark claimed items as bought, or discard claim
+- View all claimed items
+
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Uses correct HTML structure for application. At least three HTML pages. One for login, one for viewing own registry, one for viewing the registries of others. Potential fourth for viewing a total list of claimed items.
+- **CSS** - Application styling that looks good on different screen sizes, uses good whitespace, color choice and contrast. Iconography which makes it clear to the user what each action means.
+- **React** - Provides login, display of both personal registry and others', ability to select and unselect items from registry, and ability to mark items as purchased. 
+- **Service** - Backend service with endpoints for:
+    - login
+    - retrieving registries and each items' status
+    - call to isDayOff() API to remind the user how many days there are until the next public holiday
+    - changing registries, including:
+        - changing ones own registry by adding or deleting items
+        - marking others' items as claimed or unclaimed
+- **DB/Login** - Register, login, and logout users. Store users and registries in a database. Credentials securely stored in database. Can't view others' registries unless authenticated.
+- **WebSocket** - As changes are made to a registry, other users can see these changes.
 
 ## 🚀 AWS deliverable
 

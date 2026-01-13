@@ -11,6 +11,7 @@
 ## Unit Notes
 - [Google Docs](https://docs.google.com/document/d/1XpXUGv5KVJ9QYtvr1PP064hiIasfq4PtMAP1Pm6ZnTg/edit?tab=t.0)
 - [Unit 0](unit-0.md)
+- [Unit 1](unit-1.md)
 
 ## AWS
 

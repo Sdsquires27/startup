@@ -25,6 +25,21 @@ The actual act of sending data uses the TCP/IP model. This has four layers:
 4. Link - The physical connections needed to do this (ie., fibers and hardware)
 
 ## Domain Names
+You can use the ‘dig’ command to find the IP addresses of a web page. Bigger web pages will use multiple redundant IP addresses in case one of them fails. Domain Names Domain names are broken up into a root domain, with one or more possible subdomain prefixes. The root domain is represented by a secondary level domain and a top level domain. The top level domain (TLD) represent things like com, edu, or click. You can create multiple subdomains for one root domain, and each subdomain can have different IP addresses. Using the ‘whois’ console utility, one can see information about the domain.
+
+### DNS
+Every DNS server references a few special DNS servers which are considered the authoritative name servers for association a domain name with an IP address. The main ways it does this that we are concerned with are the address (A) and canonical name (CNAME) records. An A record is a map from a domain name to IP address. A CNAME maps one domain name to another, acting as a domain name alias, so that two domains link to the same information. 
+
+When you enter a name into the browser, it is resolved in the following steps:
+1. The browser checks to see if it is in its cache of names already
+2. If not, it contacts a DNS server and gets an IP address, since the DNS server keeps a cache of names.
+3. If it does not have this name, it requests a name from the authoritative name server.
+4. If this fails, you will get a unknown domain name error.
+5. If any step succeeds, the browser makes an HTTP connection with the address.
+There are a lot of levels of name caching, which can be frustrating if one is trying to update the information associated with a domain name. The time to live (TIL) setting makes these different layers clear their cache after a specific time has passed.
+
+### Leasing Domain Names
+You can lease a domain name. Obscure ones will be cheaper, which is why companies can have weird names these days. We will learn to do this.
 
 ## AWS Route 53
 

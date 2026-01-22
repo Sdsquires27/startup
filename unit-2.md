@@ -7,6 +7,9 @@ CodePen is an important application which will immediately render written code i
 3. Save your assignment periodically
 4. Submit the pen’s URL in Canvas together with a description of something you learned. 
 
+#### Assignment
+[My CodePen](https://codepen.io/Sdsquires27/pen/JoKyjMR)
+
 ### HTML introduction
 HTML provides the foundational content structure that all web applications build on. HTML was originally designed to be a publishing format for web documents, or pages. Now, we use web applications, which are either single paged or multi-paged. To make an application, we will need to use CSS as well as JavaScript, but we will start with HTML.
 #### Elements and Tags
@@ -145,3 +148,19 @@ You can save any HTML file to your computer’s disk and then open the file usin
 The two major purposes of HTML is to provide structure and content to your web application. The body element has three children: a ‘header’, ‘main’, and ‘footer’. Each of the body children then contains other structural content. It is important that this structure is represented correctly so that programmers as well as web crawlers and accessibility readers can interpret the document correctly.
 #### Block and inline
 A block element is meant to be a distinct block in the flow of the content structure. An inline element is meant to be inline with the content flow of a block element. These are elements within the larger element, such as a ‘b’ element within a ‘div’ element.
+#### Assignment
+[CodePen](https://codepen.io/Sdsquires27/pen/gbMxpmP)
+
+### Input
+| Element        | Meaning           |
+| ------------- |:-------------:|
+| form      |Input container and submission|
+| field-set      |Labeled input grouping|
+| input |Multiple types of user input       |
+| select |Selection dropdown       |
+| opt-group |Grouped selection dropdown       |
+| option |Selection option       |
+| textarea |Multiline text input       |
+| label |Individual input label       |
+| output |Output of input       |
+| meter |Display value with a known range       |

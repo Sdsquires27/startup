@@ -119,17 +119,17 @@ There are several characters reserved for defining its file format. If you want 
 Character
 Entity
 &
-&amp;
+\&amp;
 <
-&lt;
->
-&gt;
+\&lt;
+\>
+\&gt;
 "
-&quot;
+\&quot;
 '
-&apos;
+\&apos;
 😀
-&#128512;
+\&#128512;
 
 #### HTML Versions
 Understanding when different HTML features were introduced helps you know what has been around.  Newer features might not be as stable. Here are some key features:
@@ -164,3 +164,22 @@ A block element is meant to be a distinct block in the flow of the content struc
 | label |Individual input label       |
 | output |Output of input       |
 | meter |Display value with a known range       |
+
+In order to create an input you specify the desired type attribute along with any other attribute associated with that specific input. Most share these attributes:
+
+| Attribute        | Meaning           |
+| ------------- |:-------------:|
+| name      |The name of the input. This is submitted as the name of the input if used in a form|
+| disabled     |Disables the ability for the user to interact with the input|
+| value |The initial value of the input       |
+| required |Signifies that a value is required in order to be valid       |
+
+
+They will look clunky, but we can style them later using CSS. 
+
+
+#### Validating Input
+Several input elements have validation built into them. They will not accept a value that is not what you want it to be. You can specify the required attribute on an input element to mark it as requiring a value before it can be submitted. The pattern attribute exists on text, search, url, tel, email, and password inputs. When present, the pattern attribute provides a regular expression tha tmust match for the input to be considered as valid. Validation should also be done through JavaScript. 
+
+#### Assignment
+[CodePen](https://codepen.io/Sdsquires27/pen/RNRZWPp)

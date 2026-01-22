@@ -183,3 +183,20 @@ Several input elements have validation built into them. They will not accept a v
 
 #### Assignment
 [CodePen](https://codepen.io/Sdsquires27/pen/RNRZWPp)
+
+### Media
+The HTML elements that represent media include ‘img’, ‘audio’, ‘video’, ‘svg’, and ‘canvas’. The first three are references to an external file, but ‘svg’ and ‘canvas’ can render a visual image that can be animated.
+#### External Media
+The media tags that reference external media take a URL as an attribute. This can be a relative path (served from the same location as the HTML path rendering the element) or a full path.
+##### Image
+To include an image, use the ‘img’ element and specify the ‘src’ attribute with the URL to the source image. 
+##### Audio
+To include audio, use the ‘audio’ element and specify the ‘src’ attribute with the URL to the source audio file. You can include the ‘controls’ attribute if you want the user tobe able to control the audio playback. If you do not include this, there will be no visual representation of the audio. The ‘autoplay’ attribute starts teh audio playing as soon as the audio file is loaded, and the ‘loop’ attribute keeps it playing over and over. It is disencouraged to use ‘autoplay’ without allowing the user to opt-in or opt-out of such.
+##### Video
+To include a video, use the ‘video’ element and specify the ‘src’ attribute with the URL to the source image. You can also use ‘controls’ and ‘autoplay’.
+#### International Media
+The international media elements ‘svg’ and ‘canvas’ allow you to actually create images directly with your HTML. SVG allows you to render graphics inline in your HTML. Canvas allows 2D drawing and animation, but requires JavaScript support. 
+
+
+#### Assignment
+[CodePen](https://codepen.io/Sdsquires27/pen/zxBdvzx)

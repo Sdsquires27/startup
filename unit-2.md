@@ -140,3 +140,8 @@ HTML5, 2014, email, password, media, semantic tags
 By default, a web server will display the HTML file named index.html when a web browser makes a request without asking for a specific HTML file. For this reason, it is very common to name the main HTML file for your web application index.html
 #### Rendering HTML
 You can save any HTML file to your computer’s disk and then open the file using your browser. You can also open the file in VS Code and use the Live Server extension to display the HTML. CodePen is also a sandbox that will allow you to easily play with HTML.
+
+### Structure
+The two major purposes of HTML is to provide structure and content to your web application. The body element has three children: a ‘header’, ‘main’, and ‘footer’. Each of the body children then contains other structural content. It is important that this structure is represented correctly so that programmers as well as web crawlers and accessibility readers can interpret the document correctly.
+#### Block and inline
+A block element is meant to be a distinct block in the flow of the content structure. An inline element is meant to be inline with the content flow of a block element. These are elements within the larger element, such as a ‘b’ element within a ‘div’ element.

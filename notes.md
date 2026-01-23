@@ -25,9 +25,7 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 ## HTML
 
-I'm still working on this. Uploading the simon files took a while and I am taking a break in order to take more notes on CSS.
-
-
+It was difficult to get the icon working--for some reason the .ico file wasn't doing it. Other than that, it's been fine.
 
 ## CSS
 

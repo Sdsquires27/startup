@@ -197,6 +197,5 @@ To include a video, use the ‘video’ element and specify the ‘src’ attrib
 #### International Media
 The international media elements ‘svg’ and ‘canvas’ allow you to actually create images directly with your HTML. SVG allows you to render graphics inline in your HTML. Canvas allows 2D drawing and animation, but requires JavaScript support. 
 
-
 #### Assignment
 [CodePen](https://codepen.io/Sdsquires27/pen/zxBdvzx)

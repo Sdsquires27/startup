@@ -13,6 +13,7 @@
 - [Unit 0](unit-0.md)
 - [Unit 1](unit-1.md)
 - [Unit 2](unit-2.md)
+- [Unit 3](unit-3.md)
 
 ## AWS
 
@@ -24,9 +25,9 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 ## HTML
 
-This was easy. I was careful to use the correct structural elements such as header, footer, main, nav, and form. The links between the three views work great using the `a` element.
+I'm still working on this. Uploading the simon files took a while and I am taking a break in order to take more notes on CSS.
 
-The part I didn't like was the duplication of the header and footer code. This is messy, but it will get cleaned up when I get to React.
+
 
 ## CSS
 

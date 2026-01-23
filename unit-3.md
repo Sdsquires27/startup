@@ -119,3 +119,13 @@ CSS defines multiple ways to describe color, ranging from ones that are familiar
 |RGB function|rgb(128, 255, 128, 0.5)|Red, green, and blue as a percentage or number between 0 and 255, with an optional alpha opacity percentage|
 |HSL|hsl(180, 30%, 90%, 0.5)|Hue, saturation, and light, with an optional opacity percentage. Hue is the position on the 365 degree color wheel (red is 0 and 255). Saturation is how gray the color is, and light is how bright the color is.|
 
+### Fonts
+It is very important to choose an appropriate font. A beautiful modern font will make your app enjoyable to use, whereas a hard to read font, an overused font, or too many fonts will turn users away. The CSS font-family property defines what fonts should be used. It represents an ordered list of fonts. The first font in the list which is available will be used. Its important to have a list because different operating systems have different default fonts and your first choice may not be available. 
+#### Font Families
+There are four major families of fonts: Serif, sans-serif, fixed, and symbol. Fixed fonts have characters ofone size, and symbol fonts represent non-language characters.
+#### Important fonts
+In addition to referencing standard fonts found on the user’s computer you can specify a font that you provide with your application. That way your application is guaranteed to always look the same. In order to have the browser load a font you use the @font-face rule and provide the font name and source location. You can host these on your server or from a font provider.
+### Animation
+Using CSS to animatie your components is an easy way to make your application feel alive and interactive. You create animations using the animation properties and defining keyframes for what the element should look like at different times in the animation.
+### Debugging CSS
+CSS is extremely powerful, but sometimes it can be very frustrating to figure out why your page is not rendering the way that you expect. You can use debuggers to inspect this. In Google Chrome, you can select the HTML page element you want to debug and selecting the inspect option. It will visually show the different elements such as padding, borders and margins, as well as CSS properties applied to teh currently selected element. You can change and add new properties directly in the debugger. This allows you to see what each property is contributing and change them to see how that impacts the rendering. 

@@ -28,3 +28,31 @@ Universal selector and inherited styles
 CSS defines everything as boxes. When you apply styles, you are applying them to a region of the display that is a rectangular box. Within an element’s box there are several internal boxes. The innermost holds the element’s content. This is where the text or image is displayed. Next comes padding, which will inherit things like background color. After padding is the border, which has properties lke color, thickness and line style. The final is the margin, which is considered external to the actual styling of the box and therefore only represents whitespace. You can change the box-sizing CSS property from the default value of content box to border-box in order to redefine the width and height to also include the padding and the border. 
 #### CSS versions
 Like HTML, CSS has evolved significantly. It is important to note when things were added to know how stable a feature is. Since CSS3, released in 1999, the specification was divided into modules so they could be implemented at different levels of maturity.
+
+### Selectors
+The first step in understanding CSS is mastering how to select the elements that a CSS rule applies to. The CSS rule selector can take many forms. In order to explain the most common selectors we need some demonstration HTML. By default every browser defines a base set of styles that it applies to all HTML. This varies slightly, but most are largely the same.
+#### Element Type Selector
+Tos tart things off, we want to make all elements in the document use a sans-serif font. We can do this by using an element name selector. By selecting the body element we will cascade our declaration down to all the children of the body. The wildcard name selector (*) can also be used to select all elements. We can also use element name selectors to give a bottom border to the top level heading (h1), as well as modify the section elements to pop out with a gray background and some white space in the padding and margins. 
+
+#### Combinators
+Next we want to change the color of the second level headings (h2) but we only want to do that within the sections fo reach department. This can be done through a ‘descendant combinator’ which is defined with a space delimited list of values where each item in the list is a descendant of the previous item. So, our selector would be all h2 elements that are descendants of section elements. 
+section h2 {
+  color: #004400;
+}
+
+| Combinator        | Meaning           |Example |Description |
+| ------------- |:-------------|:-------------|:-------------|
+| Descendant      |A list of descendants|body section|Any section that is a descendant of a body|
+| Child      |A list of direct children|section > p|Any p that is a direct child of a section|
+| General sibling |A list of siblings|div ~ p|Any p that has a div sibling|
+| Adjacent sibling |A list of adjacent sibling |div + p|Any p that has an adjacent div sibling|
+
+For instance, we could use the general sibling combinator to increase the whitespace padding on the left of paragraphs that are siblings of a level two heading. 
+#### Class Selector
+The next selector we will use is the class selector (‘.summary{}’, where summary is the class)). Remember that any element can have zero or more classifications applied to it. One could combine the element name and class selectors to select all paragraphs with a class of summary, like ‘p.summary{}’
+#### ID Selector
+ID selectors reference the ID of an elements. Since all IDs should be unique, this will target a specific element. Use the # symbol followed by the id to do so. 
+#### Attribute Selector
+Attribute selectors allow you to select elements based on their attributes. You could use this to select any element with a given attribute (a[href]). You could also specify a required value for an attribute (a[href= “./fish.png”]) in order for the selector to match. These also support wildcards such as the ability to select attribute values containing the specific text (p[href*=”https://”])
+#### Pseudo Selector
+CSS also defines a significant list of pseudo selectors which select based on positional relationships, mouse interactions, hyperlink visitation states, and attributes. For instance “section:hover” would cause the effect written to take place when the mouse hovers over the text within ‘section’.

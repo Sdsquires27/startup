@@ -653,3 +653,12 @@ To include cases of small screen sizes, media queries can be combined with flex 
 #### Asssignment
 [CodePen](https://codepen.io/Sdsquires27/pen/jErYEad)
 
+### CSS Frameworks
+CSs frameworks provide functions and components that commonly appear in web applications. As web developers built more and more web applications, they started using the same patterns, and then combined these patterns into a shared package of code and contributed it to the world. This made it easier to develop and made the user experience simpler.
+#### Tailwind
+A new rising contender in the CSS framework space is Tailwind CSS and Tailwind UI. Instead of using large, rich, CSS rulsets to compartmentalize styling and functionality, it uses smaller definitions that are applied to individual HTML elements, moving much of the CSS representation out of the CSS file and directly into the HTML. We will learn more about this shortly.
+
+#### Bootstrap
+Bootstrap is the reigning champion of CSS frameworks. Tons of people use it, which can make it hard to grab the attention of new users. Integrating bootstrap requires referencing the Bootstrap CSS files from their CDN (content delivery network) to then add the HTML link elements to your head. If you want to use things that require JavaScript, this can be called at the end of the HTML body element. Later, you can use the Node Package Maanger to download Bootstrap and include it in your source code in order that you might not rely on someone else’s server to provide this important part of your application.  Once this is linked, you can start using its components.
+#### Assignment
+[CodePen](https://codepen.io/Sdsquires27/pen/QwEawYR)

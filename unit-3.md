@@ -129,3 +129,34 @@ In addition to referencing standard fonts found on the user’s computer you can
 Using CSS to animatie your components is an easy way to make your application feel alive and interactive. You create animations using the animation properties and defining keyframes for what the element should look like at different times in the animation.
 ### Debugging CSS
 CSS is extremely powerful, but sometimes it can be very frustrating to figure out why your page is not rendering the way that you expect. You can use debuggers to inspect this. In Google Chrome, you can select the HTML page element you want to debug and selecting the inspect option. It will visually show the different elements such as padding, borders and margins, as well as CSS properties applied to teh currently selected element. You can change and add new properties directly in the debugger. This allows you to see what each property is contributing and change them to see how that impacts the rendering. 
+
+## January 27
+### Responsive Design
+Web applications are expected to run well on a large variety of computing devices, which requires reconfiguration through ‘responsive design’. Much of HTML and CSS is already fluid, but the following features can completely change the layout of the application based on the device’s size and orientation.
+#### Display
+These are common options for the display option, which affects how an HTML element is displayed by the browser:
+
+| Value | Meaning |
+|-------|---------|
+|none|Don't display this element. The element still exists, but the browser will not render it.|
+|block|Display this element with a width that fills its parent element. A p or div element has block display by default.|
+|inline|Display this element with a width that is only as big as its content. A b or span element has inline display by default.|
+|flex|Display this element's children in a flexible orientation.|
+|grid|Display this element's children in a grid orientation.|
+
+#### Viewport meta tag
+To solve the problem of mobile phones, mobile browsers started to automatically scale things. Since this can get in the way of application responses, the viewport meta tag in the head element of HTML pages was made to tell the browser not to scale the page.
+#### Float
+The float CSS property moves an element to the left or right of its container element.
+#### Media Queries
+One of the main CSS features for creating responsive applications is the ‘@media’ selector. It dynamically detects the size and orientation of the device and appliances CSS rules to represent the structure of the HTML in a way that accommodates the change. This can be used, for example, to tell which side of the viewport is the longest, and then move things around to make the most useful things appear.
+### Grid
+The grid display layout helps display a group of child elements in a responsive grid. Start with a container element that has a bunch of child elements, and then use the CSS display property with the value of grid on the container element, which will tell the browser that all of the children of this element are to be displayed in a grid flow. The grid-template-columns property specifies the layout of the grid columns, and could be set to repeatedly define each column to auto-fill the parent element’s width with children that are resized to a minimum of 300 pixels and a maximum of one equal fractional unit (1fr) of the parent’s total width. The grid-auto-rows property could be used to specify the height of the rows, and then the grid-gap property can specify how large of a gap should be between grid items. 
+### Flex
+The flex display is useful when you want to partition your application into areas that responsively move around as the window resizes or the orientation changes. One can set the flex-direction property with a value of ‘row’ or ‘column’ to indicate which way things are oriented, and then indicate how much it can grow and the starting height as such: ‘flex: [growth] [base height]’, where ‘growth’ can also represent the amount of space that is being given to an object.
+#### Media Query
+To include cases of small screen sizes, media queries can be combined with flex to drop sections or reorient sections based on narrowness of screen. The flex-direction property can be used with the ‘@media’ query to changed based on the size of the screen. One could use the same to make elements disappear (using ‘display: none;’) when a max height is reached.
+
+
+#### Asssignment
+[CodePen](https://codepen.io/Sdsquires27/pen/jErYEad)

@@ -2,3 +2,4 @@
 .DS_Store
 production.pem
 /simon-css/
+/node_modules/

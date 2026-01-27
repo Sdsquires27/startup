@@ -81,8 +81,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **3rd party API placeholder** - There is a placeholder to the 3rd party API in index.html
 - [x] **Images** - There are trash can images
 - [x] **Login placeholder** - There is a login placeholder
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **DB data placeholder** - the my-registry page holds this placeholder
+- [x] **WebSocket placeholder** - The view-registry page holds this placeholder
 
 ## 🚀 CSS deliverable
 

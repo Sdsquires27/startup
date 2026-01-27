@@ -74,13 +74,13 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - I made four different HTML pages
+- [x] **Proper HTML element usage** - I have made different HTML elements in proper structure.
+- [x] **Links** - I have links to the other parts of the web page.
+- [x] **Text** - There is proper use of text
+- [x] **3rd party API placeholder** - There is a placeholder to the 3rd party API in index.html
+- [x] **Images** - There are trash can images
+- [x] **Login placeholder** - There is a login placeholder
 - [ ] **DB data placeholder** - I did not complete this part of the deliverable.
 - [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
 

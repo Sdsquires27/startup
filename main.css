@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header-menu{
+    display:flex;
+    list-style:none;
+    gap:1rem;
+}
+
+header{
+    display:flex;
+    flex:0 80px;
+    flex-direction:row;
+    align-items:center;
+    justify-content:start;
+    gap: 1rem;
+    list-style:none;
+}
+
+body{
+    font-family: sans-serif;
+    padding: 20px;
+    background-color: rgba(50, 50, 50, 0.1);
+}

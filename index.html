@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="main.css" />
     <title>Registry HTML</title>
     <link rel="icon" href="/icon.png" />
     <link
@@ -12,16 +11,17 @@
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="main.css" />
   </head>
   <body>
     <header>
         <h1>Registry</h1>
         <nav>
             <menu class="header-menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="my-registry.html">View Registry</a></li>
-                <li><a href="view-registry.html">View Other Registries</a></li>
-                <li><a href="about.html">About</a></li>
+                <li><a class="nav-link active" href="index.html">Home</a></li>
+                <li><a class="nav-link active" href="my-registry.html">View Registry</a></li>
+                <li><a class="nav-link active" href="view-registry.html">View Other Registries</a></li>
+                <li><a class="nav-link active" href="about.html">About</a></li>
             </menu>
         </nav>
     </header> 
@@ -30,15 +30,15 @@
         <h2>Welcome to the Registry</h2>
         <p>The next holiday is [Holiday API Call], which is only [Days Until Holiday] away. Make the most of it!</p>
             <form method="get" action="play.html">
-                <div>
+                <div class="form">
                     <span>@</span>
                     <input type="email" class="form-control" placeholder="youremail@service.com" />
                 </div>
-                <div>
+                <div class="form">
                     <span>🔒</span>
                     <input type="password" class="form-control" placeholder="password" />
                 </div>
-            <div class="mt-1">
+            <div class="mt-1 text-center">
                 <button type="submit" class="btn btn-primary">Login</button>
                 <button type="submit"class="btn btn-primary">Create Account</button>
             </div>
@@ -47,7 +47,7 @@
     </main>
     <footer>
         <p>Author Name: Seth Squires</p>
-        <a href="https://github.com/Sdsquires27/startup">View GitHub</a>
+        <a class="nav-link active" href="https://github.com/Sdsquires27/startup">View GitHub</a>
 
     </footer>
   </body>

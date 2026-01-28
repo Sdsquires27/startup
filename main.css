@@ -26,12 +26,13 @@
 header{
     display:flex;
     flex:0 80px;
+    padding-left: 2rem;
     flex-direction:row;
     align-items:center;
     justify-content:start;
     gap: 2rem;
     list-style:none;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #4169E1;
     color: white;
 }
 
@@ -41,8 +42,11 @@ footer{
     flex-direction:row;
     gap: 2rem;
     list-style:none;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #4169E1;
     color: white;
+    padding-left:2rem;
+    align-items:center;
+    justify-content:start;
 }
 
 main{
@@ -61,7 +65,7 @@ body{
     display:flex;
     flex-direction:column;
     font-size: 16px;
-    background-color: rgba(100, 100, 100, 0.1);
+    background-color: #bac4df;
     height: 100vh;
 }
 

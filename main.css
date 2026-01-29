@@ -49,6 +49,10 @@ footer{
     justify-content:start;
 }
 
+#github-link{
+    margin-bottom: 1rem;
+}
+
 main{
     display:flex;
     flex: 1;
@@ -70,8 +74,9 @@ body{
 }
 
 @media (max-height: 600px) {
+      /*Because I view the header as necessary for navigation, I do not hide it in any circumstance*/
   header {
-    display: none;
+    flex: 0 60px;
   }
   footer {
     display: none;
@@ -81,7 +86,8 @@ body{
   }
 }
 
-@media (orientation: landscape){
+@media (min-width: 560px){
+    /*At any size smaller than 560px, the words added here become squished*/
 #view-registry::after{
     content: " Registry";
 }

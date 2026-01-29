@@ -7,7 +7,7 @@
 .header-menu{
     display:flex;
     list-style:none;
-    gap:1rem;
+    gap:2rem;
 }
 
 .form{

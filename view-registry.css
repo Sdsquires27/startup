@@ -11,3 +11,16 @@
     height: 150px;
     align-items: center;
 }
+
+@media (min-width: 975px){
+    /*At any size smaller than the specified px, the words added here become squished*/
+#claimed-items::before{
+    content: "Claimed ";
+}
+}
+
+@media (max-width: 800px){
+.tables-container{
+    flex-direction: column;
+}
+}

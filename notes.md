@@ -30,7 +30,7 @@ It was difficult to get the icon working--for some reason the .ico file wasn't d
 
 ## CSS
 
-This is taking more time than I've expected, but is going well. Familiarizing myself with the different elements of Bootstrap has been somewhat difficult, but not terrible. It's been fun to make things react
+This is taking more time than I've expected, but is going well. Familiarizing myself with the different elements of Bootstrap has been somewhat difficult, but not terrible. It's been fun to make things react and formatting things. It seems like making a page can take a lot of precision, but has a huge payoff in terms of how good it makes things look and feel for the user.
 
 ## React Part 1: Routing
 

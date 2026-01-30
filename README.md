@@ -86,14 +86,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ## 🚀 CSS deliverable
 
-For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+For this deliverable I properly styled the application into its final appearance. I changed the list of things to complete in accordance with the assignment.
 
-- [ ] **Header, footer, and main content body** - I did not complete this part of the deliverable.
-- [ ] **Navigation elements** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing** - I did not complete this part of the deliverable.
-- [ ] **Application elements** - I did not complete this part of the deliverable.
-- [ ] **Application text content** - I did not complete this part of the deliverable.
-- [ ] **Application images** - I did not complete this part of the deliverable.
+- [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
+- [x] **Visually appealing colors and layout. No overflowing elements.** - Looks great to me. Tables might require more formatting, but I was satisfied with how they seemed.
+- [x] **Use of a CSS framework** - I used Bootstrap
+- [x] **All visual elements styled using CSS** - Yep!
+- [x] **Responsive to window resizing using flexbox and/or grid display** I tested each screen on a variety of different window sizes, using flexbox
+- [x] **Use of a imported font** - I used sans serif in accordance with Bootstrap
+- [x] **Use of different types of selectors including element, class, ID, and pseudo selectors** - Used them all. I believe all are in [main.css](main.css), if not there are other examples in [view-registry.css](view-registry.css)
 
 ## 🚀 React part 1: Routing deliverable
 

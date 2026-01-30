@@ -11,6 +11,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="my-registry.css" />
     <title>My Registry</title>
     <link rel="icon" href="/icon.png" />
   </head>
@@ -29,15 +30,18 @@
     </header>
     <main>
         <hr />
-        <table>
+        <table class="table table-striped table-light table-bordered">
+          <thead class="bg-dark">
             <tr>
-              <th>
+              <th scope="col" id="wide-col">
                 Registry
               </th>
-              <th>
+              <th scope="col" id="thin-col">
                 Status
               </th>
             </tr>
+          </thead>
+          <tbody>
             <tr>
               <td>
                 Backpack
@@ -78,6 +82,7 @@
                 <img src="trash.png" width="10" height="10"/>
               </td>
             </tr>
+            </tbody>
           </table>
           <form method="get">
             <div>

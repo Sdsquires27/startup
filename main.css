@@ -92,7 +92,7 @@ body{
   }
 }
 
-@media (min-width: 560px){
+@media (min-width: 610px){
     /*At any size smaller than 560px, the words added here become squished*/
 #view-registry::after{
     content: " Registry";
@@ -103,6 +103,12 @@ body{
   #view-other-registries::before{
     content: "View ";
   }
+}
+
+@media (max-width: 900px){
+#username{
+  display:none;
+}
 }
 
 @media (orientation: portrait){

@@ -6,6 +6,14 @@
     width: 100%;
 }
 
+table td:nth-child(2) {
+  text-align: center;      /* Horizontal centering */
+}
+
+table td:nth-child(3) {
+  text-align: center;      /* Horizontal centering */
+}
+
 .equal-sized-table{
     table-layout: fixed;
     height: 150px;

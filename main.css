@@ -36,6 +36,12 @@ header{
     color: white;
 }
 
+#username{
+  margin-left: auto;
+  padding-right: 2rem;
+  margin-top: 1rem;
+}
+
 footer{
     display:flex;
     flex:0 80px;

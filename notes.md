@@ -10,11 +10,11 @@
 
 ## Unit Notes
 - [Google Docs](https://docs.google.com/document/d/1XpXUGv5KVJ9QYtvr1PP064hiIasfq4PtMAP1Pm6ZnTg/edit?tab=t.0)
-- [Unit 0](unit-0.md)
-- [Unit 1](unit-1.md)
-- [Unit 2](unit-2.md)
-- [Unit 3](unit-3.md)
-- [Unit 4](unit-4.md)
+- [Unit 0](unit-notes/unit-0.md)
+- [Unit 1](unit-notes/unit-1.md)
+- [Unit 2](unit-notes/unit-2.md)
+- [Unit 3](unit-notes/unit-3.md)
+- [Unit 4](unit-notes/unit-4.md)
 
 ## AWS
 

@@ -1,5 +1,129 @@
-.body {
-  display: flex;
-  flex-direction: column;
-  min-width: 375px;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header-menu{
+    display:flex;
+    list-style:none;
+    gap:2rem;
+}
+
+.nav-link:hover{
+    cursor: pointer;
+    color:lightgray;
+}
+
+.form{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    align-items: center;
+    gap: 1rem;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header{
+    display:flex;
+    flex:0 80px;
+    padding-left: 2rem;
+    flex-direction:row;
+    align-items:center;
+    justify-content:start;
+    gap: 2rem;
+    list-style:none;
+    background-color: #4169E1;
+    color: white;
+}
+
+#username{
+  margin-left: auto;
+  padding-right: 2rem;
+  margin-top: 1rem;
+}
+
+footer{
+    display:flex;
+    flex:0 80px;
+    flex-direction:row;
+    gap: 2rem;
+    list-style:none;
+    background-color: #4169E1;
+    color: white;
+    padding-left:2rem;
+    align-items:center;
+    justify-content:start;
+}
+
+#github-link{
+    margin-bottom: 1rem;
+}
+
+main{
+    display:flex;
+    flex: 1;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:1rem;
+    margin-top:50px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.body{
+    display:flex;
+    flex-direction:column;
+    font-size: 16px;
+    background-color: #bac4df;
+    height: 100vh;
+}
+
+@media (max-height: 600px) {
+      /*Because I view the header as necessary for navigation, I do not hide it in any circumstance*/
+  header {
+    flex: 0 60px;
+  }
+  footer {
+    display: none;
+  }
+  main {
+    flex: 1 100vh;
+  }
+}
+
+@media (min-width: 610px){
+    /*At any size smaller than 560px, the words added here become squished*/
+#view-registry::after{
+    content: " Registry";
+}
+#view-other-registries::after{
+    content: " Registries";
+  }
+  #view-other-registries::before{
+    content: "View ";
+  }
+}
+
+@media (max-width: 900px){
+#username{
+  display:none;
+}
+}
+
+@media (orientation: portrait){
+  header {
+    flex: 0 60px;
+  }
+  footer {
+    display: none;
+  }
+  main {
+    flex: 1 100vh;
+  }
 }

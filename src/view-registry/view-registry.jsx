@@ -1,4 +1,5 @@
 import React from 'react';
+import './view-registry.css';
 
 export function ViewRegistry() {
   return (

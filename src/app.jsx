@@ -15,14 +15,20 @@ export default function App() {
                 <h1>Registry</h1>
                 <nav>
                     <menu className="header-menu">
-                        <li><a className="nav-link active" href="index.html">Home</a></li>
-                        <li><a className="nav-link active" id="view-registry" href="my-registry.html">View</a></li>
-                        <li><a className="nav-link active" id="view-other-regfistries" href="view-registry.html">Other</a></li>
-                        <li><a className="nav-link active" href="about.html">About</a></li>
+                        <li><NavLink className="nav-link active" to="/">Home</NavLink></li>
+                        <li><NavLink className="nav-link active" to="/my-registry">View</NavLink></li>
+                        <li><NavLink className="nav-link active" to="/view-registry">Other</NavLink></li>
+                        <li><NavLink className="nav-link active" to="/about">About</NavLink></li>
                     </menu>
                 </nav>
             </header> 
-            <main>App components will go here</main>
+            <Routes>
+                <Route path='/' element={<Login />} exact />
+                <Route path='/my-registry' element={<MyRegistry />} />
+                <Route path='/view-registry' element={<ViewRegistry />} />
+                <Route path='/about' element={<About />} />
+                <Route path='*' element={<NotFound />} />
+            </Routes>
             <footer>
                 <p>Author Name: Seth Squires</p>
                 <a className="nav-link active" id="github-link" href="https://github.com/Sdsquires27/startup">View GitHub</a>
@@ -30,4 +36,7 @@ export default function App() {
         </div>
   </BrowserRouter>
   );
+}
+function NotFound() {
+  return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
 }

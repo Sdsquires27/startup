@@ -16,8 +16,8 @@ export default function App() {
                 <nav>
                     <menu className="header-menu">
                         <li><NavLink className="nav-link active" to="/">Home</NavLink></li>
-                        <li><NavLink className="nav-link active" to="/my-registry">View</NavLink></li>
-                        <li><NavLink className="nav-link active" to="/view-registry">Other</NavLink></li>
+                        <li><NavLink className="nav-link active" id="view-registry" to="/my-registry">View</NavLink></li>
+                        <li><NavLink className="nav-link active" id="view-other-registries" to="/view-registry">Other</NavLink></li>
                         <li><NavLink className="nav-link active" to="/about">About</NavLink></li>
                     </menu>
                 </nav>

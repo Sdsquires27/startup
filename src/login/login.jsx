@@ -7,7 +7,7 @@ export function Login() {
         <hr/>
         <h2>Welcome to the Registry</h2>
         <p>The next holiday is [Holiday API Call], which is only [Days Until Holiday] away. Make the most of it!</p>
-            <form method="get" action="play.html">
+            <form method="get" action="view-registry">
                 <div className="form">
                     <span>@</span>
                     <input type="email" className="form-control" placeholder="youremail@service.com" />

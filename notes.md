@@ -34,7 +34,7 @@ This is taking more time than I've expected, but is going well. Familiarizing my
 
 ## React Part 1: Routing
 
-It took a lot of work to get this set up. The adjustments didn't require much new innovation, but it did take a lot of refactoring.
+It took a lot of work to get this set up. The adjustments didn't require much new innovation, but it did take a lot of refactoring. It also meant that whatever mistakes I might have made in my HTML code were made clear to me: the React was much more sensitive to this.
 
 ## React Part 2: Reactivity
 

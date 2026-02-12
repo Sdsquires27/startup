@@ -38,29 +38,7 @@ It took a lot of work to get this set up. The adjustments didn't require much ne
 
 ## React Part 2: Reactivity
 
-This was a lot of fun to see it all come together. I had to keep remembering to use React state instead of just manipulating the DOM directly.
-
-Handling the toggling of the checkboxes was particularly interesting.
-
-```jsx
-<div className="input-group sound-button-container">
-  {calmSoundTypes.map((sound, index) => (
-    <div key={index} className="form-check form-switch">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value={sound}
-        id={sound}
-        onChange={() => togglePlay(sound)}
-        checked={selectedSounds.includes(sound)}
-      ></input>
-      <label className="form-check-label" htmlFor={sound}>
-        {sound}
-      </label>
-    </div>
-  ))}
-</div>
-```
+Studying the Simon code has been fascinating and a little intimidating. There's a lot there and React is a whole lot to take on at once. Honestly, it's a lot different than what I'm used to. That said, I like how elegantly the React puts together the HTML and the JavaScript. The Simon game is definitely the most complex part, but for now I don't need to build anything like that. I thought the Login was interesting--it's not that complicated, but it makes the look and feel of the website seem much more professional, and it's pretty impressive. I'll be sure to look at that code much more carefully as I prepare to create my own version of this.
 
 # Unit Notes:
 # Unit 0 Notes

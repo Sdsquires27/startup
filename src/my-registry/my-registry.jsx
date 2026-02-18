@@ -6,38 +6,49 @@ import './my-registry.css';
 export function MyRegistry({userName}) {
 
   const [registryItems, setRegistryItems] = React.useState(localStorage.getItem(userName + "'s registryItems") || "");
+  const [claimedStatus, setClaimedStatus] = React.useState(localStorage.getItem(userName + "'s claimedStatus") || "");
 
 function parseRegistryItems(){
   if (registryItems === undefined) return [];
-    return JSON.parse(registryItems);
+    return [JSON.parse(registryItems), JSON.parse(claimedStatus)];
 }
 
 function changeRegistryItems(itemName){
   if (itemName === "") return;
   var curList = [];
-  if (registryItems !== "" &&registryItems !== "undefined") curList = parseRegistryItems();
+  var curClaimedStatus = [];
+  if (registryItems !== "" &&registryItems !== "undefined") [curList, curClaimedStatus] = parseRegistryItems();
   curList.push(itemName);
+  curClaimedStatus.push("unclaimed");
   setRegistryItems(JSON.stringify(curList));
+  setClaimedStatus(JSON.stringify(curClaimedStatus));
 }
 
 function removeRegistryItem(itemIndex){
-  var curList = parseRegistryItems();
+  var [curList, curClaimedStatus] = parseRegistryItems();
   curList.splice(itemIndex, 1);
-  if(curList.length === 0) setRegistryItems("");
-  else setRegistryItems(JSON.stringify(curList));
+  curClaimedStatus.splice(itemIndex, 1);
+  if(curList.length === 0) {
+    setRegistryItems("");
+    setClaimedStatus("");
+  }
+  else {
+    setRegistryItems(JSON.stringify(curList));
+    setClaimedStatus(JSON.stringify(curClaimedStatus));
+  }
 }
 
 
   function populateRegistryItems(){
     const itemList = [];
-    const items = parseRegistryItems();
+    var [items, claimedStatus] = parseRegistryItems();
     for (let i = 0; i < items.length; i++){
       itemList.push(<tr>
               <td>
                 {items[i]}
               </td>
               <td>
-                <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem([i])}/>
+                <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem(i)}/>
               </td>
             </tr>);
   }
@@ -50,8 +61,9 @@ function RegistryItemsExist(){
 
   React.useEffect(() => {
     localStorage.setItem(userName + "'s registryItems", registryItems);
+    localStorage.setItem(userName + "'s claimedStatus", claimedStatus);
 
-  }, [registryItems]);
+  }, [registryItems, claimedStatus]);
 
   return (
     <main>

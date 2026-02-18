@@ -17,9 +17,9 @@ React.useEffect(() => {
         <hr/>
         <h2>Welcome to the Registry</h2>
         {authState === AuthState.Authenticated && (
-            <p>Welcome back {userName}! The next holiday is {Holiday}, which is only {DaysUntilHoliday} away. Make the most of it!</p>)}
+            <p>Welcome back {userName}! The next holiday is {Holiday}, which is only {DaysUntilHoliday} days away. Make the most of it!</p>)}
         {authState === AuthState.Unauthenticated && (
-            <p>The next holiday is {Holiday}, which is only {DaysUntilHoliday} away. Make the most of it!</p>)}
+            <p>The next holiday is {Holiday}, which is only {DaysUntilHoliday} days away. Make the most of it!</p>)}
         {authState === AuthState.Authenticated && (
             <Authenticated
                 userName={userName}

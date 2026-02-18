@@ -38,9 +38,9 @@ export default function App() {
                                         userName={userName}
                                         authState={authState}
                                         onAuthChange={(userName, authState) => {
-                                        setAuthState(authState);
-                                        setUserName(userName);
-                                        }}
+                                            setAuthState(authState);
+                                            setUserName(userName);
+                                            }}
                                         />} exact />
                 <Route path='/my-registry' element={<MyRegistry userName={userName}/>} />
                 <Route path='/view-registry' element={<ViewRegistry userName={userName}/>} />

@@ -15,7 +15,7 @@ export function Authenticated(properties){
             <button className="btn btn-primary" id="play-button" onClick={() => navigate('/my-registry')}>
                 View My Registry
             </button>
-            <button className="btn btn-primary" id="play-button" onClick={() => navigate('/view-registry')}>
+            <button className="btn btn-primary" id="play-button" onClick={() => navigate('/my-registry')}>
                 View Other Registry
             </button>
             <button className="btn btn-secondary" onClick={() => handleLogout()}>

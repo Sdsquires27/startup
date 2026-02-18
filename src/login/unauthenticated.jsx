@@ -25,7 +25,7 @@ export function Unauthenticated(properties) {
             <form method="get" action="view-registry">
                 <div className="form">
                     <span>@</span>
-                    <input type="email" className="form-control" placeholder="youremail@service.com" value={userName} onChange={(e) => setUserName(e.target.value)} />
+                    <input type="username" className="form-control" placeholder="youremail@service.com" value={userName} onChange={(e) => setUserName(e.target.value)} />
                 </div>
                 <div className="form">
                     <span>🔒</span>
@@ -36,7 +36,7 @@ export function Unauthenticated(properties) {
                 <button type="submit" className="btn btn-primary" onClick={() => createAccount()} disabled={!userName || !password}>Create Account</button>
             </div>
             </form>
-            <MessageDialog message={displayError} onHide={() => setDisplayError("There's been an error! Please try again")} />
+            <MessageDialog message={displayError} onHide={() => setDisplayError(null)} />
 
         </>
     );

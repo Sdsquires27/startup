@@ -12,7 +12,6 @@ export function Authenticated(properties){
 
     return (
         <div>
-            <p>Welcome back {properties.userName}! The next holiday is [Holiday API Call], which is only [Days Until Holiday] away. Make the most of it!</p>
             <button className="btn btn-primary" id="play-button" onClick={() => navigate('/play')}>
                 Play
             </button>

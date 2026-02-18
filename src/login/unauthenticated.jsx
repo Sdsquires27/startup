@@ -1,5 +1,6 @@
 import React from 'react';
 import {MessageDialog} from './messageDialog';
+import './unauthenticated.css';
 
 
 
@@ -21,6 +22,8 @@ export function Unauthenticated(properties) {
     }
     return(
         <>
+            <p>The next holiday is [Holiday API Call], which is only [Days Until Holiday] away. Make the most of it!</p>
+        
             <form method="get" action="view-registry">
                 <div className="form">
                     <span>@</span>

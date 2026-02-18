@@ -39,6 +39,24 @@ It took a lot of work to get this set up. The adjustments didn't require much ne
 ## React Part 2: Reactivity
 
 Studying the Simon code has been fascinating and a little intimidating. There's a lot there and React is a whole lot to take on at once. Honestly, it's a lot different than what I'm used to. That said, I like how elegantly the React puts together the HTML and the JavaScript. The Simon game is definitely the most complex part, but for now I don't need to build anything like that. I thought the Login was interesting--it's not that complicated, but it makes the look and feel of the website seem much more professional, and it's pretty impressive. I'll be sure to look at that code much more carefully as I prepare to create my own version of this.
+This has been super fun to implement and see come together. A few things of note stuck out to me, like to prevent readtime syntax errors, it's important to check that the data being parsed into a JSON file is not "undefined". I loved implementing creating new rows in the table: 
+```js
+  function populateRegistryItems(){
+    const itemList = [];
+    const items = parseRegistryItems();
+    for (let i = 0; i < items.length; i++){
+      itemList.push(<tr>
+              <td>
+                {items[i]}
+              </td>
+              <td>
+                <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem([i])}/>
+              </td>
+            </tr>);
+  }
+  return itemList;
+}
+```
 
 # Unit Notes:
 # Unit 0 Notes

@@ -67,7 +67,6 @@ function RegistryItemsExist(){
 
   return (
     <main>
-        <hr />
 
         {RegistryItemsExist() && (<table className="table table-striped table-light table-bordered">
           <thead className="bg-dark">
@@ -96,7 +95,6 @@ function RegistryItemsExist(){
               <button className="btn btn-primary" id="add-item-button" type="button" onClick={() => changeRegistryItems(document.getElementById("item-input").value)}>Add</button>
             </div>
           </form>
-        <hr />
-        </main>
+    </main>
   );
 }

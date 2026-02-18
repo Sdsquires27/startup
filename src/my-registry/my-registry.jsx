@@ -20,6 +20,14 @@ function changeRegistryItems(itemName){
   setRegistryItems(JSON.stringify(curList));
 }
 
+function removeRegistryItem(itemIndex){
+  var curList = parseRegistryItems();
+  curList.splice(itemIndex, 1);
+  if(curList.length === 0) setRegistryItems("");
+  else setRegistryItems(JSON.stringify(curList));
+}
+
+
   function populateRegistryItems(){
     const itemList = [];
     const items = parseRegistryItems();
@@ -29,11 +37,15 @@ function changeRegistryItems(itemName){
                 {items[i]}
               </td>
               <td>
-                <img src="trash.png" width="10" height="10"/>
+                <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem([i])}/>
               </td>
             </tr>);
   }
   return itemList;
+}
+
+function RegistryItemsExist(){
+  return registryItems !== "" && registryItems !== "undefined";
 }
 
   React.useEffect(() => {
@@ -45,7 +57,7 @@ function changeRegistryItems(itemName){
     <main>
         <hr />
 
-        {registryItems !== "" && registryItems !== "undefined" && (<table className="table table-striped table-light table-bordered">
+        {RegistryItemsExist() && (<table className="table table-striped table-light table-bordered">
           <thead className="bg-dark">
             <tr>
               <th scope="col" id="wide-col">
@@ -62,7 +74,7 @@ function changeRegistryItems(itemName){
           </table>
         )}
 
-        {registryItems === "" || registryItems === "undefined" && (
+        {!RegistryItemsExist() && (
           <p>It looks like your registry is empty! Use the form below to add more items to your registry!</p>
         )}
 

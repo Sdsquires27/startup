@@ -41,6 +41,10 @@ header{
     color: white;
 }
 
+.pic-icon{
+  cursor:pointer;
+}
+
 #username{
   margin-left: auto;
   padding-right: 2rem;

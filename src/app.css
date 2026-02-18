@@ -80,6 +80,13 @@ main{
     margin-right: 50px;
 }
 
+#username{
+    margin-left: auto;
+    padding-right: 2rem;
+    margin-top: 1rem;
+
+}
+
 .body{
     display:flex;
     flex-direction:column;

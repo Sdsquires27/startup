@@ -18,7 +18,7 @@ export function Unauthenticated(properties) {
 
     async function createAccount(){
         localStorage.setItem('userName', userName);
-        properties.onLogin(username);
+        properties.onLogin(userName);
     }
     return(
         <>        

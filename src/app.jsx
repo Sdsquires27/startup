@@ -32,6 +32,11 @@ export default function App() {
                         <li><NavLink className="nav-link active" to="/about">About</NavLink></li>
                     </menu>
                 </nav>
+                <div id="username">
+                    {authState === AuthState.Authenticated && (
+                        <p>{userName}</p>
+                    )}
+                </div>
             </header> 
             <Routes>
                 <Route path='/' element={<Login

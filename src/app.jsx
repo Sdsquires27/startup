@@ -5,6 +5,7 @@ import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
 import { MyRegistry } from './my-registry/my-registry';
 import { ViewRegistry } from './view-registry/view-registry';
+import { AuthState } from './login/authState';
 import { About } from './about/about';
 
 export default function App() {
@@ -16,8 +17,13 @@ export default function App() {
                 <nav>
                     <menu className="header-menu">
                         <li><NavLink className="nav-link active" to="/">Home</NavLink></li>
-                        <li><NavLink className="nav-link active" id="view-registry" to="/my-registry">View</NavLink></li>
-                        <li><NavLink className="nav-link active" id="view-other-registries" to="/view-registry">Other</NavLink></li>
+/                        {authState === AuthState.Authenticated && (
+                            <li><NavLink className="nav-link active" id="view-registry" to="/my-registry">View</NavLink></li>
+                        )}
+                        {authState === AuthState.Authenticated && (                                                
+                            <li><NavLink className="nav-link active" id="view-other-registries" to="/view-registry">Other</NavLink></li>
+                        )}
+
                         <li><NavLink className="nav-link active" to="/about">About</NavLink></li>
                     </menu>
                 </nav>

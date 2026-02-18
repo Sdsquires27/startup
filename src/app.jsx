@@ -9,6 +9,11 @@ import { AuthState } from './login/authState';
 import { About } from './about/about';
 
 export default function App() {
+
+    const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+    const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+    const [authState, setAuthState] = React.useState(currentAuthState);
+
   return (
     <BrowserRouter>
         <div className="body">
@@ -17,7 +22,7 @@ export default function App() {
                 <nav>
                     <menu className="header-menu">
                         <li><NavLink className="nav-link active" to="/">Home</NavLink></li>
-/                        {authState === AuthState.Authenticated && (
+                        {authState === AuthState.Authenticated && (
                             <li><NavLink className="nav-link active" id="view-registry" to="/my-registry">View</NavLink></li>
                         )}
                         {authState === AuthState.Authenticated && (                                                
@@ -29,9 +34,16 @@ export default function App() {
                 </nav>
             </header> 
             <Routes>
-                <Route path='/' element={<Login />} exact />
-                <Route path='/my-registry' element={<MyRegistry />} />
-                <Route path='/view-registry' element={<ViewRegistry />} />
+                <Route path='/' element={<Login
+                                        userName={userName}
+                                        authState={authState}
+                                        onAuthChange={(userName, authState) => {
+                                        setAuthState(authState);
+                                        setUserName(userName);
+                                        }}
+                                        />} exact />
+                <Route path='/my-registry' element={<MyRegistry userName={userName}/>} />
+                <Route path='/view-registry' element={<ViewRegistry userName={userName}/>} />
                 <Route path='/about' element={<About />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>

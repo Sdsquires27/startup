@@ -108,8 +108,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **All functionality implemented or mocked out** - It's there, using primarily loginState to mirror functionality. WebSocket implemented through the user "WebSocketUser"
-- [x] **Hooks** - Extensive use of useEffect and useReact in my-registry and login.
+- [x] **All functionality implemented or mocked out** - It's there, using primarily loginState to mirror functionality. WebSocket implemented through the user "WebSocketUser", who claims items every ten seconds. Everything works as intended. Users can add items to their registry, which can then be seen by other users. When seen, they can be claimed by that user, unclaimed, and marked as gifted, removing it from the user's original registry.
+- [x] **Hooks** - Extensive use of useEffect and useReact in my-registry, view-registry, and login.
 
 ## 🚀 Service deliverable
 

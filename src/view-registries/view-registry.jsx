@@ -8,21 +8,22 @@ export function ViewRegistry({userName}) {
   const [curClaimedStatus, setCurClaimedStatus] = React.useState();
   const [curUser, setCurUser] = React.useState();
 
+  setInterval(() => {
+    var [claimedStatus] = parseRegistryItems([curClaimedStatus]);
+    if (claimedStatus === undefined) return;
+    for (let i = 0; i < claimedStatus.length; i++){
+      if (claimedStatus[i] === "null"){
+        claimedStatus[i] = "WebSocketUser";
+        setCurClaimedStatus(JSON.stringify(claimedStatus));
+        return;
+      }
+    }
+  }, 10000); // simulate WebSocket updates every 5 seconds
+
   React.useEffect(() => {
     if (curUser === undefined) return;
     setCurRegistryItems(localStorage.getItem(curUser + "'s registryItems"));
     setCurClaimedStatus(localStorage.getItem(curUser + "'s claimedStatus"));
-    setInterval(() => {
-      var [claimedStatus] = parseRegistryItems([curClaimedStatus]);
-      if (claimedStatus === undefined) return;
-      for (let i = 0; i < claimedStatus.length; i++){
-        if (claimedStatus[i] === "null"){
-          claimedStatus[i] = "WebSocketUser";
-          setCurClaimedStatus(JSON.stringify(claimedStatus));
-          return;
-        }
-      }
-    }, 10000); // simulate WebSocket updates every 5 seconds
   }, [curUser]);
 
   React.useEffect(() => {

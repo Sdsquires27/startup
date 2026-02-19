@@ -1,6 +1,6 @@
 import React from 'react';
 import './view-registry.css'
-import { parseRegistryItems, itemsExist } from './RegistryHandlers';
+import { parseRegistryItems, itemsExist, removeRegistryItem } from './RegistryHandlers';
 
 
 export function ViewRegistry({userName}) {
@@ -29,6 +29,20 @@ function handleClick(itemIndex){
   if (claimedStatus[itemIndex] === "null") claimedStatus[itemIndex] = userName;
   else if (claimedStatus[itemIndex] === userName) claimedStatus[itemIndex] = "null";
   setCurClaimedStatus(JSON.stringify(claimedStatus));
+}
+
+function handleDelete(itemIndex){
+  var [claimedStatus] = parseRegistryItems([curClaimedStatus]);
+  claimedStatus[itemIndex] = "null";
+  setCurClaimedStatus(JSON.stringify(claimedStatus));
+}
+
+function testInclusion(list, str){ // this is necessary due to substrings
+  if (list === undefined || list === null) return false;
+  for (let i = 0; i < list.length; i++){
+    if (list[i] === str) return true;
+  }
+  return false;
 }
 
 function PopulateRegistryItems(){
@@ -63,10 +77,10 @@ function PopulateClaimedItems(){
                 {items[i]}
               </td>
               <td>
-                <img src="/trash.png" width="10" height="10" className="pic-icon"/>
+                <img src="/trash.png" width="10" height="10" className="pic-icon" onClick={() => handleDelete(i)}/>
               </td>
               <td>
-                <img src="/icon.png" width="10" height="10" className="pic-icon"/>
+                <img src="/checkmark.png" width="10" height="10" className="pic-icon" onClick={() => removeRegistryItem(i, curRegistryItems, curClaimedStatus, setCurRegistryItems, setCurClaimedStatus)}/>
               </td>
             </tr>
       );
@@ -108,7 +122,7 @@ function PopulateClaimedItems(){
             </tbody>
           </table>
         
-        {curClaimedStatus.includes(userName) && (
+        {testInclusion(parseRegistryItems([curClaimedStatus])[0], userName) && (
         <table className="table table-striped table-bordered equal-sized-table">
             <thead>
             <tr>

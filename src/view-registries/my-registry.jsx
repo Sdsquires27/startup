@@ -1,6 +1,6 @@
 import React from 'react';
 import './my-registry.css';
-import { parseRegistryItems, itemsExist } from './RegistryHandlers';
+import { parseRegistryItems, itemsExist, removeRegistryItem } from './RegistryHandlers';
 
 export function MyRegistry({userName}) {
 
@@ -18,19 +18,7 @@ function changeRegistryItems(itemName){
   setClaimedStatus(JSON.stringify(curClaimedStatus));
 }
 
-function removeRegistryItem(itemIndex){
-  var [curList, curClaimedStatus] = parseRegistryItems([registryItems, claimedStatus]);
-  curList.splice(itemIndex, 1);
-  curClaimedStatus.splice(itemIndex, 1);
-  if(curList.length === 0) {
-    setRegistryItems("");
-    setClaimedStatus("");
-  }
-  else {
-    setRegistryItems(JSON.stringify(curList));
-    setClaimedStatus(JSON.stringify(curClaimedStatus));
-  }
-}
+
 
 
   function populateRegistryItems(){
@@ -42,7 +30,7 @@ function removeRegistryItem(itemIndex){
                 {items[i]}
               </td>
               <td>
-                <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem(i)}/>
+                <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem(i, registryItems, claimedStatus, setRegistryItems, setClaimedStatus)}/>
               </td>
             </tr>);
   }

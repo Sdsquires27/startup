@@ -14,9 +14,21 @@ export function ViewRegistry({userName}) {
     setCurClaimedStatus(localStorage.getItem(curUser + "'s claimedStatus"));
   }, [curUser]);
 
+  React.useEffect(() => {
+    localStorage.setItem(curUser + "'s registryItems", curRegistryItems);
+    localStorage.setItem(curUser + "'s claimedStatus", curClaimedStatus);
+  }, [curRegistryItems, curClaimedStatus]);
+
 function findUser(name){
   if (name === "" || name === userName) return;
   setCurUser(name);
+}
+
+function handleClick(itemIndex){
+  var [claimedStatus] = parseRegistryItems([curClaimedStatus]);
+  if (claimedStatus[itemIndex] === "null") claimedStatus[itemIndex] = userName;
+  else if (claimedStatus[itemIndex] === userName) claimedStatus[itemIndex] = "null";
+  setCurClaimedStatus(JSON.stringify(claimedStatus));
 }
 
 function PopulateRegistryItems(){
@@ -33,12 +45,36 @@ function PopulateRegistryItems(){
                 {items[i]}
               </td>
               <td>
-                <img src={pictureLink} width="10" height="10"/>
+                <img src={pictureLink} className="pic-icon" width="10" height="10" onClick={() => handleClick(i)}/>
               </td>
             </tr>);
-    }
+      }  
   return itemList;
 }
+
+function PopulateClaimedItems(){
+  const itemList = [];
+  var [items, claimedStatus] = parseRegistryItems([curRegistryItems, curClaimedStatus]);
+  for (let i = 0; i < items.length; i++){
+    if (claimedStatus[i] === userName){
+      itemList.push(
+        <tr key={i}>
+              <td>
+                {items[i]}
+              </td>
+              <td>
+                <img src="/trash.png" width="10" height="10" className="pic-icon"/>
+              </td>
+              <td>
+                <img src="/icon.png" width="10" height="10" className="pic-icon"/>
+              </td>
+            </tr>
+      );
+    }
+  }
+    return itemList;
+}
+
 
 
 
@@ -88,7 +124,7 @@ function PopulateRegistryItems(){
             </tr>
             </thead>
             <tbody>
-
+              {PopulateClaimedItems()}
             </tbody>
 
         </table>
@@ -101,28 +137,5 @@ function PopulateRegistryItems(){
 
 
     </main>
-
-
-            /* 
-            <tr>
-              <td>
-                Stationary Bag
-              </td>
-              <td>
-                <img src="/trash.png" width="10" height="10"/>
-              </td>
-              <td>
-                <img src="/icon.png" width="10" height="10"/>
-              </td>
-            </tr>
-            
-            <tr>
-              <td>
-                Backpack
-              </td>
-              <td>
-                <img src="/closedCircle.png" width="10" height="10"/>
-              </td>
-            </tr>*/
   );
 }

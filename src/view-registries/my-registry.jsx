@@ -18,9 +18,6 @@ function changeRegistryItems(itemName){
   setClaimedStatus(JSON.stringify(curClaimedStatus));
 }
 
-
-
-
   function populateRegistryItems(){
     const itemList = [];
     var [items] = parseRegistryItems([registryItems]);

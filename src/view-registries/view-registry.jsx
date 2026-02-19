@@ -130,10 +130,10 @@ function PopulateClaimedItems(){
                 Items&emsp;  
               </th>
               <th>
-                Cancel&emsp;  
+                Cancel  &emsp;  
               </th>
               <th>
-                Purchase
+                Gifted
               </th>
             </tr>
             </thead>
@@ -142,10 +142,10 @@ function PopulateClaimedItems(){
             </tbody>
 
         </table>
-        )}
+        )}      
       </div>
 
-      )}
+)}
 
 
 

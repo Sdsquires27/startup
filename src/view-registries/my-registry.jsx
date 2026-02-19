@@ -1,31 +1,25 @@
 import React from 'react';
 import './my-registry.css';
-
-
+import { parseRegistryItems, itemsExist } from './RegistryHandlers';
 
 export function MyRegistry({userName}) {
 
   const [registryItems, setRegistryItems] = React.useState(localStorage.getItem(userName + "'s registryItems") || "");
   const [claimedStatus, setClaimedStatus] = React.useState(localStorage.getItem(userName + "'s claimedStatus") || "");
 
-function parseRegistryItems(){
-  if (registryItems === undefined) return [];
-    return [JSON.parse(registryItems), JSON.parse(claimedStatus)];
-}
-
 function changeRegistryItems(itemName){
   if (itemName === "") return;
   var curList = [];
   var curClaimedStatus = [];
-  if (registryItems !== "" &&registryItems !== "undefined") [curList, curClaimedStatus] = parseRegistryItems();
+  if (registryItems !== "" &&registryItems !== "undefined") [curList, curClaimedStatus] = parseRegistryItems([registryItems, claimedStatus]);
   curList.push(itemName);
-  curClaimedStatus.push("unclaimed");
+  curClaimedStatus.push("null");
   setRegistryItems(JSON.stringify(curList));
   setClaimedStatus(JSON.stringify(curClaimedStatus));
 }
 
 function removeRegistryItem(itemIndex){
-  var [curList, curClaimedStatus] = parseRegistryItems();
+  var [curList, curClaimedStatus] = parseRegistryItems([registryItems, claimedStatus]);
   curList.splice(itemIndex, 1);
   curClaimedStatus.splice(itemIndex, 1);
   if(curList.length === 0) {
@@ -41,7 +35,7 @@ function removeRegistryItem(itemIndex){
 
   function populateRegistryItems(){
     const itemList = [];
-    var [items, claimedStatus] = parseRegistryItems();
+    var [items] = parseRegistryItems([registryItems]);
     for (let i = 0; i < items.length; i++){
       itemList.push(<tr>
               <td>
@@ -55,10 +49,6 @@ function removeRegistryItem(itemIndex){
   return itemList;
 }
 
-function RegistryItemsExist(){
-  return registryItems !== "" && registryItems !== "undefined";
-}
-
   React.useEffect(() => {
     localStorage.setItem(userName + "'s registryItems", registryItems);
     localStorage.setItem(userName + "'s claimedStatus", claimedStatus);
@@ -68,7 +58,7 @@ function RegistryItemsExist(){
   return (
     <main>
 
-        {RegistryItemsExist() && (<table className="table table-striped table-light table-bordered">
+        {itemsExist(registryItems) && (<table className="table table-striped table-light table-bordered">
           <thead className="bg-dark">
             <tr>
               <th scope="col" id="wide-col">
@@ -85,7 +75,7 @@ function RegistryItemsExist(){
           </table>
         )}
 
-        {!RegistryItemsExist() && (
+        {!itemsExist(registryItems) && (
           <p>It looks like your registry is empty! Use the form below to add more items to your registry!</p>
         )}
 

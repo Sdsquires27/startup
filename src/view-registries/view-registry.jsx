@@ -1,28 +1,18 @@
 import React from 'react';
 import './view-registry.css'
+import { parseRegistryItems, itemsExist } from './RegistryHandlers';
+
 
 export function ViewRegistry({userName}) {
   const [curRegistryItems, setCurRegistryItems] = React.useState();
   const [curClaimedStatus, setCurClaimedStatus] = React.useState();
-  const [userRegistryItems, setUserRegistryItems] = React.useState();
   const [curUser, setCurUser] = React.useState();
-  const pictureLinks = {
-    unclaimed:"/openCircle.png",
-    claimed:"/closedCircle.png",
-    userClaimed:"/checkedImage.png"
-    };
 
   React.useEffect(() => {
     if (curUser === undefined) return;
     setCurRegistryItems(localStorage.getItem(curUser + "'s registryItems"));
-    setUserRegistryItems(localStorage.getItem(userName + " " + curUser + "'s registryItems")); // curUser TestUser's registryItems
     setCurClaimedStatus(localStorage.getItem(curUser + "'s claimedStatus"));
   }, [curUser]);
-
-function parseRegistryItems(thingsToParse){
-  if (curRegistryItems === undefined) return [];
-    return thingsToParse.map(item => JSON.parse(item) || []);
-}
 
 function findUser(name){
   if (name === "" || name === userName) return;
@@ -31,17 +21,12 @@ function findUser(name){
 
 function PopulateRegistryItems(){
     const itemList = [];
-    var [items, claimedStatus, userItems] = parseRegistryItems([curRegistryItems, curClaimedStatus, userRegistryItems]);
+    var [items, claimedStatus] = parseRegistryItems([curRegistryItems, curClaimedStatus]);
     for (let i = 0; i < items.length; i++){
-      var status = claimedStatus[i];
-      if (userItems.length !== 0){
-        if (userItems[i] === true){
-          status = "userClaimed";
-        }
-      var pictureLink = pictureLinks[status] ? pictureLinks[status] : pictureLinks["unclaimed"];
-
-
-      }
+      var claimedUser = claimedStatus[i];
+      if (claimedUser === "null") var pictureLink = "openCircle.png";
+      else claimedUser === userName ? pictureLink = "checkedImage.png" : pictureLink = "closedCircle.png";
+      
       itemList.push(
             <tr key={i}>
               <td>
@@ -51,17 +36,10 @@ function PopulateRegistryItems(){
                 <img src={pictureLink} width="10" height="10"/>
               </td>
             </tr>);
-  }
+    }
   return itemList;
 }
 
-function RegistryItemsExist(){
-  return curRegistryItems !== "" && curRegistryItems !== "undefined" && curRegistryItems !== undefined;
-}
-
-function RegistryItemsAreClaimed(){
-  return curClaimedStatus !== "" && curClaimedStatus !== "undefined" && curClaimedStatus !== undefined;
-}
 
 
   return (
@@ -71,12 +49,12 @@ function RegistryItemsAreClaimed(){
         <form method="get">
           <div className="add-item">
             <input className="form-control" id="user-input" type="text" placeholder="Enter name here" />
-            <button className="btn btn-primary" id="add-item-button" type="button" onClick={() => findUser(document.getElementById("user-input").value)}>Search</button>
+            <button className="btn btn-primary" id="search-user-button" type="button" onClick={() => findUser(document.getElementById("user-input").value)}>Search</button>
           </div>
         </form>
       </div>
 
-      {RegistryItemsExist() && (
+      {itemsExist(curRegistryItems) && (
       <div className="tables-container">
           <table className="table table-striped table-light table-bordered equal-sized-table">
             <thead>
@@ -94,7 +72,7 @@ function RegistryItemsAreClaimed(){
             </tbody>
           </table>
         
-        {RegistryItemsAreClaimed() && (
+        {curClaimedStatus.includes(userName) && (
         <table className="table table-striped table-bordered equal-sized-table">
             <thead>
             <tr>

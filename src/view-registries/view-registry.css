@@ -20,6 +20,19 @@ table td:nth-child(3) {
     align-items: center;
 }
 
+#search-user-button{
+    margin-left: auto;
+    margin-right: 1rem;
+    width: 20%;
+}
+
+@media (min-width: 550px){
+    /*At any size smaller than the specified px, the words added here become squished*/
+#search-user-button::after{
+    content: " User";
+}
+}
+
 @media (min-width: 975px){
     /*At any size smaller than the specified px, the words added here become squished*/
 #claimed-items::before{

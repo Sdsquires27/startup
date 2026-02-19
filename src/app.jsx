@@ -3,8 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
-import { MyRegistry } from './my-registry/my-registry';
-import { ViewRegistry } from './view-registry/view-registry';
+import { MyRegistry } from './view-registries/my-registry';
+import { ViewRegistry } from './view-registries/view-registry';
 import { AuthState } from './login/authState';
 import { About } from './about/about';
 

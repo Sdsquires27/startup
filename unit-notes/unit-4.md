@@ -273,3 +273,40 @@ There are four main functions that can be used:
 |clear()|Clears all items in local storage|
 
 A local storage value must be of type string, number, or boolean. 
+## February 19
+### Promises
+If there are longer processes that need to be run, they should be done using a Promise. This allows the main thread to continue running while another process runs in the background. You create the promise by calling the Promise object constructor and passing it an executor function that runs the asynchronous operation. This means that promise constructor may return before the promise executor function runs. There are three states that a promise could be in:
+1. Pending - currently running asynchronously
+2. Fulfilled - completed successfully
+3. Rejected - Failed to complete
+#### Resolving and Rejecting
+The executor takes two functions as parameters, resolve and reject. Resolve sets the promise to fulfilled, and reject sets the promise to rejected. The state is displayed when the function is logged or displayed.
+#### Then, catch, finally
+The promise object has three functions: then, catch, and finally. The then function si called if the promise is fulfilled, the catch is called if it is rejected, and finally is always called when processing is finished.
+### JavaScript Async/await
+JavaScript Promise objects are great for asynchronous execution, but there is more concise representation for large systems. This was allowed through the introduction of async/await. The await keyword wraps the execution of a promise and removed the need to chain functions, blocking until the promise state moves to fulfilled or throwing an exception if the state moves to rejected. 
+#### Async
+One important restriction for workign with await is that you cannot call await unless it is called at the top level of the JavaScript, or is in a function that is defined with the async keywork. By putting the async keywork on a function, it becomes a promise which is resolved immediately and has a value that is the return value of the function. This can then explicitly become a promise by putting a promise as the return value.
+#### Await
+The await keywork wraps a call to the async function, blocks execution until the promise has resolved, and then returns the result of the promise. This can create code that is asynchronous but still maintains the flow of the code without explicitly using callbacks.
+#### Putting it all together
+You can see the benefit for async/await clearly by considering a case where multiple promises are required. Consider the following code which calls the fetch web API on an endpoint that returns JSON. 
+```js
+const httpPromise = fetch('https://simon.cs260.click/api/user/me');
+const jsonPromise = httpPromise.then((r) => r.json());
+jsonPromise.then((j) => console.log(j));
+console.log('done');
+
+// OUTPUT: donea
+// OUTPUT: {email: 'bud@mail.com', authenticated: true}
+```
+And is clarified through: 
+```js
+const httpResponse = await fetch('https://simon.cs260.click/api/user/me');
+const jsonResponse = await httpResponse.json();
+console.log(jsonResponse);
+console.log('done');
+
+// OUTPUT: {email: 'baud@mail.com', authenticated: true}
+// OUTPUT: done
+```

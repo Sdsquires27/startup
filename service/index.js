@@ -80,3 +80,59 @@ app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
 
+//GetRegistry
+apiRouter.get('/api/registry/:username', verifyAuth, async (req, res) => {
+    const user = req.params.username;
+    if (!userItems[user]) {
+        res.send(null);
+    } 
+    else {
+        res.send(userItems[user]);
+    }
+});
+
+//AddItem
+apiRouter.post('/api/registry/:username', verifyAuth, async (req, res) => {
+    const user = req.params.username;
+    const item = req.body;
+    var items = JSON.parse(userItems[user] || '[]');
+    items.push(item);
+    userItems[user] = JSON.stringify(items);
+    res.send(userItems[user]);
+});
+
+// DeleteItem
+
+
+// ClaimItem
+
+// UnclaimItem
+
+// Helper functions
+async function createUser(email, password) {
+  const passwordHash = await bcrypt.hash(password, 10);
+
+  const user = {
+    email: email,
+    password: passwordHash,
+    token: uuid.v4(),
+  };
+  users.push(user);
+
+  return user;
+}
+
+async function findUser(field, value) {
+  if (!value) return null;
+
+  return users.find((u) => u[field] === value);
+}
+
+// setAuthCookie in the HTTP response
+function setAuthCookie(res, authToken) {
+  res.cookie(authCookieName, authToken, {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'strict',
+  });
+}

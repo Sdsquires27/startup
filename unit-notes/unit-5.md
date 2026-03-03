@@ -156,3 +156,59 @@ Here is the evolution of HTTP:
 
 ### Fetch
 The ability to make HTTP requests from JavaScript is one of the main technologies that changed the web from static content pages to one of web applications. Today, the fetch API is the preferred way to make HTTP requests. The promise then function takes a callback function that is asynchronously called when the requested URL content is obtained. If the returned content is of type application/json you can use the json function on the object to convert it to a JavaScript object.
+
+## March 3
+### Authorization services
+In order for an application to remember a user’s data, it will need a way to uniquely associate the data with a particular credential. You must authenticate a user by asking for information, such as an email address and password. You must remember, for a time, that the user has authenticated by storing an authentication token on the user’s device (often in form of a cookie). You will then need to determine what a user is authorized to do; different people might be able to do different things. A simple application might have a single field that represents the role of user. The service code would use that role to allow, limit, or prevent what a service endpoint does. This can become very complex, and is the primary target for a hacker. However, constantly being secure dissuades users from using your application--which creates opposing priorities for your application. Several solutions have bene made for this, which applications can be very helpful to avoid building your own infrastructure. These use standard protocols for authenticating and authorizing, including OAuth, SAML, and OIDC. They also support Single Sign On and Federated Login. Single sign on allows a user to user the same credentials for multiple applications. Federated login allows a user to login once, and then the authentication token is reused to automatically log the user in to multiple website. For this course we will implement our own authentication using a simple email / password design. Other services can be used as experiments.
+### Account Creation and Login
+You support secure authentication in a web application by first providing a way for users to uniquely identify themselves. This requires a register endpoint, a login endpoint for future visits, and a third to logout. Once a user is authenticated access can be controlled to other authorized endpoints. We will build each of these backend services and then build a frontend that allows the user to access these three endpoints.
+#### Endpoint Design
+Let’s define what each of our endpoints does by creating simple Curl commands. We can use these commands to test the endpoints when we are done. 
+
+|Endpoint|Purpose|
+|--------|-------|
+|Registration|Create account (create user and auth)|
+|Login|Log into account (create auth)|
+|Logout|Logout of account (delete auth)|
+|Get Me|Returns information about the authenticated user|
+
+__Registration__
+Given an email and password, return a cookie containg the authentication token. If the email already exists, return the 408 (conflict). 
+__Login authenticatoin endpoint__
+Given an email and password, return a cookie containing the authentication token. If the email does not exist or the password is bad, return 401 (unauthorized).
+__Logout authentication endpoint__
+Given a cookie containing an authentication token, mark the token as invalid for future use. Always return 200 (ok).
+__GetMe endpoint__
+Given a cookie containing an authentication token, return the authenticated user. If the token is invalid, or the user does not exist, return a 401 (unauthorized).
+__Web Service__
+With our service endpoints defined, we can start building our web service by stubbing out each of the endpoints. This is all done in an example directory.
+
+### Service Daemons - PM2 
+When you run a program from the console, the program will automatically terminate when you close the console or if the computer restarts. In order to keep programs running after a shutdown you need to register it as a daemon. The term daemon comes from the idea of something that is always there working in the background. Hopefully you only have good daemons running in your background. PM2 is an easy way to do this, and is already installed on your production service as part of the AWS AMI that was selected at the beginning of the project. The deployment scripts found with the simon projects automatically modify PM2 to register and restart your web services, which means that you shouldn’t need to do anything with PM2. The instructions here are for debugging.
+`pm2 ls` allows you to see PM2 in action, which shows the services configured to run on your web server. Here are some commands: 
+
+|Command|Purpose|
+|-----|----|
+|pm2 ls|List all of the hosted node processes|
+|pm2 monit|Visual monitor|
+|pm2 start index.js -n simon|Add a new process with an explicit name|
+|pm2 start index.js -n startup -- 4000|Add a new process with an explicit name and port parameter|
+|pm2 stop simon|Stop a process|
+|pm2 restart simon|Restart a process|
+|pm2 delete simon|Delete a process from being hosted|
+|pm2 delete all|Delete all processes|
+|pm2 save|Save the current processes across reboot||
+|pm2 restart all|Reload all of the processes|
+|pm2 restart simon --update-env|Reload process and update the node version to the current environment definition|
+|pm2 update|Reload pm2|
+|pm2 start env.js --watch --ignore-watch="node_modules"|Automatically reload service when index.js changes|
+|pm2 describe simon|Describe detailed process information|
+|pm2 startup|Displays the command to run to keep PM2 running after a reboot.|
+|pm2 logs simon|Display process logs|
+|pm2 env 0|Display environment variables for process. Use pm2 ls to get the process ID|
+
+#### Registering a new web service
+If you want to setup another subdomain that accesses a different web service on your web server, you need to follow these steps:
+1. Add the rule to the Caddyfile to tell it how to direct requests for the domain.
+2. Create a directory and add the files for the web service
+3. Configure PM2 to host the web service.

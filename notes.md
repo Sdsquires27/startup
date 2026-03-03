@@ -60,6 +60,10 @@ This has been super fun to implement and see come together. A few things of note
 ```
 In making this code, the whole purpose of JavaScript became clear to me, and the rest of development was a lot clearer. 
 
+## Service
+Debugging the Simon code was fascinating. Several vague parts of the code became clear to me, especially where services are running on ports and how we are using that in our system.
+
+
 # Unit Notes:
 # Unit 0 Notes
 CS 260

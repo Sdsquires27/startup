@@ -4,3 +4,4 @@ production.pem
 /node_modules/
 /simon-react/
 /simon-service/
+/service/node_modules/

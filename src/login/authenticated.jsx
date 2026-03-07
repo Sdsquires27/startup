@@ -6,8 +6,16 @@ export function Authenticated(properties){
     const navigate = useNavigate();
 
     function handleLogout(){
+    fetch(`/api/auth/logout`, {
+      method: 'delete',
+    })
+      .catch(() => {
+        // Logout failed. Assuming offline
+      })
+      .finally(() => {
         localStorage.removeItem('userName');
         properties.onLogout();
+      });
     }
 
     return (

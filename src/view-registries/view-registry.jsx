@@ -18,8 +18,9 @@ export function ViewRegistry({userName}) {
         return;
       }
     }
-  }, 10000); // simulate WebSocket updates every 5 seconds
+  }, 10000); // simulate WebSocket updates every 10 seconds
 
+  //When curUser is updated
   React.useEffect(() => {
     if (!curUser) return;
     
@@ -66,8 +67,9 @@ async function handleClick(itemIndex){ // handle claiming of item
   }
 }
 
+// Unclaiming item
 async function handleDelete(itemIndex){
-  await fetch(`/api/registry/${curUser}/${itemIndex}/claim`,{
+  await fetch(`/api/registry/${curUser}/${itemIndex}/unclaim`,{
       method: 'POST'
     })
       .then((response) => response.text())

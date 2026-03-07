@@ -62,6 +62,18 @@ In making this code, the whole purpose of JavaScript became clear to me, and the
 
 ## Service
 Debugging the Simon code was fascinating. Several vague parts of the code became clear to me, especially where services are running on ports and how we are using that in our system.
+Adding more of my own code has been an arduous process. It doesn't come as naturally as some of the other things, but I've been able to start figuring out how it all fits together in new ways thanks to it. This has culminated in my current api for AddItem:
+```js
+//AddItem
+apiRouter.post('/registry/:itemName', verifyAuth, async (req, res) => {
+    const user = await findUser('token', req.cookies[authCookieName]);
+    const item = req.params.itemName;
+    var items = JSON.parse(userItems[user] || '[]');
+    items.push(item);
+    userItems[user] = JSON.stringify(items);
+    res.send(userItems[user]);
+});
+```
 
 
 # Unit Notes:

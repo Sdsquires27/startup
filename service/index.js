@@ -19,11 +19,6 @@ const authCookieName = "token";
 let apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-// Debug route (remove before deploying)
-app.get('/debug/users', (req, res) => {
-  res.json(users);
-});
-
 // Static files
 app.use(express.static('public'));
 

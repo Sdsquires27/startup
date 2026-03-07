@@ -67,7 +67,6 @@ async function handleClick(itemIndex){ // handle claiming of item
 }
 
 async function handleDelete(itemIndex){
-  var [claimedStatus] = parseRegistryItems([curClaimedStatus]);
   await fetch(`/api/registry/${curUser}/${itemIndex}/claim`,{
       method: 'POST'
     })

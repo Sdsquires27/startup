@@ -21,32 +21,60 @@ export function ViewRegistry({userName}) {
   }, 10000); // simulate WebSocket updates every 5 seconds
 
   React.useEffect(() => {
-    if (curUser === undefined) return;
-    setCurRegistryItems(localStorage.getItem(curUser + "'s registryItems"));
-    setCurClaimedStatus(localStorage.getItem(curUser + "'s claimedStatus"));
-  }, [curUser]);
+    if (!curUser) return;
+    
+    fetch(`/api/registry/${curUser}`)
+          .then((response) => response.text())
+          .then((items) => {
+            setCurRegistryItems(items);
+          });
 
-  React.useEffect(() => {
-    localStorage.setItem(curUser + "'s registryItems", curRegistryItems);
-    localStorage.setItem(curUser + "'s claimedStatus", curClaimedStatus);
-  }, [curRegistryItems, curClaimedStatus]);
+  fetch(`/api/registry/${curUser}/claimStatus`)
+          .then((response) => response.text())
+          .then((items) => {
+            setCurClaimedStatus(items);
+          });
+
+  }, [curUser]);
 
 function findUser(name){
   if (name === "" || name === userName) return;
   setCurUser(name);
 }
 
-function handleClick(itemIndex){
+async function handleClick(itemIndex){ // handle claiming of item
   var [claimedStatus] = parseRegistryItems([curClaimedStatus]);
-  if (claimedStatus[itemIndex] === "null") claimedStatus[itemIndex] = userName;
-  else if (claimedStatus[itemIndex] === userName) claimedStatus[itemIndex] = "null";
-  setCurClaimedStatus(JSON.stringify(claimedStatus));
+  if (claimedStatus[itemIndex] === "null")
+  {
+    await fetch(`/api/registry/${curUser}/${itemIndex}/claim`,{
+      method: 'POST'
+    })
+      .then((response) => response.text())
+      .then((claimStatuses) => {
+        setCurClaimedStatus(claimStatuses);
+      });
+  }
+  else
+  {
+      await fetch(`/api/registry/${curUser}/${itemIndex}/claim`,{
+      method: 'POST'
+    })
+      .then((response) => response.text())
+      .then((claimStatuses) => {
+        setCurClaimedStatus(claimStatuses);
+      });
+  }
 }
 
-function handleDelete(itemIndex){
+async function handleDelete(itemIndex){
   var [claimedStatus] = parseRegistryItems([curClaimedStatus]);
-  claimedStatus[itemIndex] = "null";
-  setCurClaimedStatus(JSON.stringify(claimedStatus));
+  await fetch(`/api/registry/${curUser}/${itemIndex}/claim`,{
+      method: 'POST'
+    })
+      .then((response) => response.text())
+      .then((claimStatuses) => {
+        setCurClaimedStatus(claimStatuses);
+      });
 }
 
 function testInclusion(list, str){ // this is necessary due to substrings

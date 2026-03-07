@@ -14,11 +14,11 @@ export async function removeRegistryItem(itemIndex, username, setRegistryItems, 
     .then((data) => {
       if(JSON.parse(data.items).length === 0) {
         setRegistryItems("");
-        setClaimedStatus("");
+        setClaimedStatus ?? setClaimedStatus("");
       }
       else {
         setRegistryItems(data.items);
-        setClaimedStatus(data.claimStatuses);
+        setClaimedStatus ?? setClaimedStatus(data.claimStatuses);
       }
 
     });

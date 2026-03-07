@@ -7,21 +7,34 @@ const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 app.use(express.json());
+app.use(cookieParser());
 
 // memory data structures
 let users = [];
 let userItems = {};
 let claimStatuses = {};
+const authCookieName = "token";
 
-
-// router path for endpoints
-app.use(express.static('public'));
 
 let apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+// Debug route (remove before deploying)
+app.get('/debug/users', (req, res) => {
+  res.json(users);
+});
+
+// Static files
+app.use(express.static('public'));
+
+// Default error handler
+app.use(function (err, req, res, next) {
+  res.status(500).send({ type: err.name, message: err.message });
+});
+
+// Catch-all LAST
+app.use((_req, res) => {
+  res.sendFile('index.html', { root: 'public' });
 });
 
 // service endpoints
@@ -71,18 +84,8 @@ const verifyAuth = async (req, res, next) => {
   }
 };
 
-// Default error handler
-app.use(function (err, req, res, next) {
-  res.status(500).send({ type: err.name, message: err.message });
-});
-
-// Return the application's default page if the path is unknown
-app.use((_req, res) => {
-  res.sendFile('index.html', { root: 'public' });
-});
-
 //GetRegistry
-apiRouter.get('/api/registry/:username', verifyAuth, async (req, res) => {
+apiRouter.get('/registry/:username', verifyAuth, async (req, res) => {
     const user = req.params.username;
     if (!userItems[user]) {
         res.send(null);
@@ -93,7 +96,7 @@ apiRouter.get('/api/registry/:username', verifyAuth, async (req, res) => {
 });
 
 //AddItem
-apiRouter.post('/api/registry/:username', verifyAuth, async (req, res) => {
+apiRouter.post('/registry/:username', verifyAuth, async (req, res) => {
     const user = req.params.username;
     const item = req.body;
     var items = JSON.parse(userItems[user] || '[]');
@@ -103,7 +106,7 @@ apiRouter.post('/api/registry/:username', verifyAuth, async (req, res) => {
 });
 
 // DeleteItem
-apiRouter.delete('/api/registry/:username/:itemId', verifyAuth, async (req, res) => {
+apiRouter.delete('/registry/:username/:itemId', verifyAuth, async (req, res) => {
     const user = req.params.username;
     const itemId = parseToInt(req.params.itemId);
     var items = JSON.parse(userItems[user] || '[]');
@@ -113,7 +116,7 @@ apiRouter.delete('/api/registry/:username/:itemId', verifyAuth, async (req, res)
 });
 
 // ClaimItem
-apiRouter.post('/api/registry/:username/:itemId/claim', verifyAuth, async (req, res) => {
+apiRouter.post('/registry/:username/:itemId/claim', verifyAuth, async (req, res) => {
     const user = req.params.username;
     const itemId = parseToInt(req.params.itemId);
     var claimStatus = JSON.parse(claimStatuses[user] || '[]');
@@ -124,7 +127,7 @@ apiRouter.post('/api/registry/:username/:itemId/claim', verifyAuth, async (req, 
 });
 
 // UnclaimItem
-apiRouter.post('/api/registry/:username/:itemId/unclaim', verifyAuth, async (req, res) => {
+apiRouter.post('/registry/:username/:itemId/unclaim', verifyAuth, async (req, res) => {
     const user = req.params.username;
     const itemId = parseToInt(req.params.itemId);
     var claimStatus = JSON.parse(claimStatuses[user] || '[]');
@@ -161,3 +164,8 @@ function setAuthCookie(res, authToken) {
     sameSite: 'strict',
   });
 }
+
+
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});

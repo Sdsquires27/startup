@@ -95,10 +95,22 @@ apiRouter.get('/registry/:username', verifyAuth, async (req, res) => {
     }
 });
 
-//AddItem
-apiRouter.post('/registry/:username', verifyAuth, async (req, res) => {
+//GetClaimedStatuses
+apiRouter.get('/registry/:username/claimStatus', verifyAuth, async (req, res) => {
     const user = req.params.username;
-    const item = req.body;
+    if (!userItems[user]) {
+        res.send(null);
+    } 
+    else {
+        res.send(claimStatuses[user]);
+    }
+});
+
+
+//AddItem
+apiRouter.post('/registry/:itemName', verifyAuth, async (req, res) => {
+    const user = await findUser('token', req.cookies[authCookieName]);
+    const item = req.params.itemName;
     var items = JSON.parse(userItems[user] || '[]');
     items.push(item);
     userItems[user] = JSON.stringify(items);
@@ -118,9 +130,16 @@ apiRouter.delete('/registry/:username/:itemId', verifyAuth, async (req, res) => 
 // ClaimItem
 apiRouter.post('/registry/:username/:itemId/claim', verifyAuth, async (req, res) => {
     const user = req.params.username;
+    const curUser = await findUser('token', req.cookies[authCookieName]);
+
+    if (curUser.email === registryUser) {
+        res.status(403).send({ msg: 'You cannot claim your own items' });
+        return;
+    }
+
     const itemId = parseToInt(req.params.itemId);
     var claimStatus = JSON.parse(claimStatuses[user] || '[]');
-    claimStatus[itemId] = user;
+    claimStatus[itemId] = curUser.email;
     claimStatuses[user] = JSON.stringify(claimStatus);
     res.send(claimStatuses[user]);
 

@@ -11,6 +11,7 @@ app.use(express.json());
 // memory data structures
 let users = [];
 let userItems = {};
+let claimStatuses = {};
 
 
 // router path for endpoints
@@ -102,11 +103,35 @@ apiRouter.post('/api/registry/:username', verifyAuth, async (req, res) => {
 });
 
 // DeleteItem
-
+apiRouter.delete('/api/registry/:username/:itemId', verifyAuth, async (req, res) => {
+    const user = req.params.username;
+    const itemId = parseToInt(req.params.itemId);
+    var items = JSON.parse(userItems[user] || '[]');
+    items.splice(itemId, 1);
+    userItems[user] = JSON.stringify(items);
+    res.send(userItems[user]);
+});
 
 // ClaimItem
+apiRouter.post('/api/registry/:username/:itemId/claim', verifyAuth, async (req, res) => {
+    const user = req.params.username;
+    const itemId = parseToInt(req.params.itemId);
+    var claimStatus = JSON.parse(claimStatuses[user] || '[]');
+    claimStatus[itemId] = user;
+    claimStatuses[user] = JSON.stringify(claimStatus);
+    res.send(claimStatuses[user]);
+
+});
 
 // UnclaimItem
+apiRouter.post('/api/registry/:username/:itemId/unclaim', verifyAuth, async (req, res) => {
+    const user = req.params.username;
+    const itemId = parseToInt(req.params.itemId);
+    var claimStatus = JSON.parse(claimStatuses[user] || '[]');
+    claimStatus[itemId] = "null";
+    claimStatuses[user] = JSON.stringify(claimStatus);
+    res.send(claimStatuses[user]);
+});
 
 // Helper functions
 async function createUser(email, password) {

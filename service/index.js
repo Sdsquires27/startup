@@ -117,9 +117,13 @@ apiRouter.delete('/registry/:username/:itemId', verifyAuth, async (req, res) => 
     const user = req.params.username;
     const itemId = parseToInt(req.params.itemId);
     var items = JSON.parse(userItems[user] || '[]');
+    var claimStatus = JSON.parse(claimStatuses[user] || '[]');
     items.splice(itemId, 1);
+    claimStatus.splice(itemId, 1);
     userItems[user] = JSON.stringify(items);
-    res.send(userItems[user]);
+    claimStatuses[user] = JSON.stringify(claimStatus);
+    res.send({ items: userItems[user], claimStatuses: claimStatuses[user] 
+   });
 });
 
 // ClaimItem

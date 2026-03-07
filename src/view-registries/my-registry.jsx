@@ -4,18 +4,35 @@ import { parseRegistryItems, itemsExist, removeRegistryItem } from './RegistryHa
 
 export function MyRegistry({userName}) {
 
-  const [registryItems, setRegistryItems] = React.useState(localStorage.getItem(userName + "'s registryItems") || "");
-  const [claimedStatus, setClaimedStatus] = React.useState(localStorage.getItem(userName + "'s claimedStatus") || "");
 
-function changeRegistryItems(itemName){
-  if (itemName === "") return;
-  var curList = [];
-  var curClaimedStatus = [];
-  if (registryItems !== "" &&registryItems !== "undefined") [curList, curClaimedStatus] = parseRegistryItems([registryItems, claimedStatus]);
-  curList.push(itemName);
-  curClaimedStatus.push("null");
-  setRegistryItems(JSON.stringify(curList));
-  setClaimedStatus(JSON.stringify(curClaimedStatus));
+  const [registryItems, setRegistryItems] = React.useState([]);
+  const [claimedStatus, setClaimedStatus] = React.useState([]);
+
+  React.useEffect(() =>{
+    fetch(`/api/registry/${userName}`)
+      .then((response) => response.text())
+      .then((items) => {
+        setRegistryItems(items);
+      });
+  }, []);
+
+    React.useEffect(() =>{
+    fetch(`/api/registry/${userName}/claimStatus`)
+      .then((response) => response.text())
+      .then((items) => {
+        setClaimedStatus(items);
+      });
+  }, []);
+
+async function changeRegistryItems(itemName){
+  await fetch(`/api/registry/${itemName}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  })
+      .then((response) => response.json())
+      .then((items) => {
+        setRegistryItems(items);
+  });
 }
 
   function populateRegistryItems(){
@@ -27,18 +44,13 @@ function changeRegistryItems(itemName){
                 {items[i]}
               </td>
               <td>
-                <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem(i, registryItems, claimedStatus, setRegistryItems, setClaimedStatus)}/>
+                <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem(i, userName, setRegistryItems, setClaimedStatus)}/>
               </td>
             </tr>);
   }
   return itemList;
 }
 
-  React.useEffect(() => {
-    localStorage.setItem(userName + "'s registryItems", registryItems);
-    localStorage.setItem(userName + "'s claimedStatus", claimedStatus);
-
-  }, [registryItems, claimedStatus]);
 
   return (
     <main>

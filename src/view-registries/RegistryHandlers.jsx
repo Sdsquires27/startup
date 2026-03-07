@@ -6,18 +6,20 @@ export function itemsExist(items){
   return items !== "" && items !== "undefined" && items !== undefined;
 }
 
-export function removeRegistryItem(itemIndex, registryItems, claimedStatus, setRegistryItems, setClaimedStatus) {
-  var [curList, curClaimedStatus] = parseRegistryItems([registryItems, claimedStatus]);
-  const itemName = curList[itemIndex];
-  const claimedUser = curClaimedStatus[itemIndex];
-  curList.splice(itemIndex, 1);
-  curClaimedStatus.splice(itemIndex, 1);
-  if(curList.length === 0) {
-    setRegistryItems("");
-    setClaimedStatus("");
-  }
-  else {
-    setRegistryItems(JSON.stringify(curList));
-    setClaimedStatus(JSON.stringify(curClaimedStatus));
-  }
+export async function removeRegistryItem(itemIndex, username, setRegistryItems, setClaimedStatus) {
+  await fetch(`/api/registry/${username}/${itemIndex}`, {
+    method: 'DELETE',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if(JSON.parse(data.items).length === 0) {
+        setRegistryItems("");
+        setClaimedStatus("");
+      }
+      else {
+        setRegistryItems(data.items);
+        setClaimedStatus(data.claimStatuses);
+      }
+
+    });
 }

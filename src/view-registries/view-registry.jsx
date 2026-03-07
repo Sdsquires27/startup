@@ -92,7 +92,7 @@ function PopulateClaimedItems(){
                 <img src="/trash.png" width="10" height="10" className="pic-icon" onClick={() => handleDelete(i)}/>
               </td>
               <td>
-                <img src="/checkmark.png" width="10" height="10" className="pic-icon" onClick={() => removeRegistryItem(i, curRegistryItems, curClaimedStatus, setCurRegistryItems, setCurClaimedStatus)}/>
+                <img src="/checkmark.png" width="10" height="10" className="pic-icon" onClick={() => removeRegistryItem(i, userName, setCurRegistryItems, setCurClaimedStatus)}/>
               </td>
             </tr>
       );

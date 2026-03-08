@@ -106,16 +106,25 @@ apiRouter.get('/registry/:username/claimStatus', verifyAuth, async (req, res) =>
 apiRouter.post('/registry/:itemName', verifyAuth, async (req, res) => {
     const user = await findUser('token', req.cookies[authCookieName]);
     const item = req.params.itemName;
-    var items = JSON.parse(userItems[user] || '[]');
+    var items = JSON.parse(userItems[user.email] || '[]');
+    var claimStatus = JSON.parse(userItems[user.email] || '[]');
     items.push(item);
-    userItems[user] = JSON.stringify(items);
-    res.send(userItems[user]);
+    claimStatus.push("null");
+    userItems[user.email] = JSON.stringify(items);
+    claimStatuses[user.email] = JSON.stringify(userItems);
+    res.send(userItems[user.email]);
 });
 
 // DeleteItem
 apiRouter.delete('/registry/:username/:itemId', verifyAuth, async (req, res) => {
     const user = req.params.username;
-    const itemId = parseToInt(req.params.itemId);
+    const itemId = parseInt(req.params.itemId);
+
+    console.log('user:', user);
+    console.log('item:', req.params.itemId);
+    console.log('userItems:', userItems[user]);
+    console.log('allUserItems:', userItems)
+
     var items = JSON.parse(userItems[user] || '[]');
     var claimStatus = JSON.parse(claimStatuses[user] || '[]');
     items.splice(itemId, 1);
@@ -177,7 +186,7 @@ async function findUser(field, value) {
 // setAuthCookie in the HTTP response
 function setAuthCookie(res, authToken) {
   res.cookie(authCookieName, authToken, {
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     sameSite: 'strict',
   });

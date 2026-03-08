@@ -12,14 +12,9 @@ export async function removeRegistryItem(itemIndex, username, setRegistryItems, 
   })
     .then((response) => response.json())
     .then((data) => {
-      if(JSON.parse(data.items).length === 0) {
-        setRegistryItems("");
-        setClaimedStatus ?? setClaimedStatus("");
-      }
-      else {
-        setRegistryItems(data.items);
-        setClaimedStatus ?? setClaimedStatus(data.claimStatuses);
-      }
+
+      setRegistryItems(data.items);
+      setClaimedStatus && setClaimedStatus(data.claimStatuses);
 
     });
 }

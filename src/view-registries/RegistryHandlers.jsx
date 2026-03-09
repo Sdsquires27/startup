@@ -1,5 +1,8 @@
 export function parseRegistryItems(thingsToParse){
-  return thingsToParse.map(item => JSON.parse(item) || []);
+  return thingsToParse.map(item => {
+    if (!item) return []
+    return JSON.parse(item) || []
+  });
 }
 
 export function itemsExist(items){

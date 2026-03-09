@@ -8,17 +8,11 @@ export function ViewRegistry({userName}) {
   const [curClaimedStatus, setCurClaimedStatus] = React.useState();
   const [curUser, setCurUser] = React.useState();
 
-  setInterval(() => {
-    var [claimedStatus] = parseRegistryItems([curClaimedStatus]);
-    if (claimedStatus === undefined) return;
-    for (let i = 0; i < claimedStatus.length; i++){
-      if (claimedStatus[i] === "null"){
-        claimedStatus[i] = "WebSocketUser";
-        setCurClaimedStatus(JSON.stringify(claimedStatus));
-        return;
-      }
-    }
-  }, 10000); // simulate WebSocket updates every 10 seconds
+setInterval(async () => {
+  const response = await fetch(`/api/registry/${curUser}/claimStatus`);
+  const data = await response.text();
+  setCurClaimedStatus(data); 
+}, 10000); // simulate WebSocket updates every 10 seconds
 
   //When curUser is updated
   React.useEffect(() => {
@@ -57,7 +51,7 @@ async function handleClick(itemIndex){ // handle claiming of item
   }
   else
   {
-      await fetch(`/api/registry/${curUser}/${itemIndex}/claim`,{
+      await fetch(`/api/registry/${curUser}/${itemIndex}/unclaim`,{
       method: 'POST'
     })
       .then((response) => response.text())

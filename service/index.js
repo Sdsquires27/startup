@@ -107,7 +107,11 @@ apiRouter.post('/registry/:itemName', verifyAuth, async (req, res) => {
     const user = await findUser('token', req.cookies[authCookieName]);
     const item = req.params.itemName;
     var items = JSON.parse(userItems[user.email] || '[]');
-    var claimStatus = JSON.parse(userItems[user.email] || '[]');
+    var claimStatus = JSON.parse(claimStatuses[user.email] || '[]');
+
+    if (!Array.isArray(items)) items = [];
+    if (!Array.isArray(claimStatus)) claimStatus = [];
+
     items.push(item);
     claimStatus.push("null");
     userItems[user.email] = JSON.stringify(items);
@@ -135,15 +139,17 @@ apiRouter.delete('/registry/:username/:itemId', verifyAuth, async (req, res) => 
 
 // ClaimItem
 apiRouter.post('/registry/:username/:itemId/claim', verifyAuth, async (req, res) => {
+      console.log('CLAIM HIT - user:', req.params.username, 'item:', req.params.itemId);
+
     const user = req.params.username;
     const curUser = await findUser('token', req.cookies[authCookieName]);
 
-    if (curUser.email === registryUser) {
+    if (curUser.email === user) {
         res.status(403).send({ msg: 'You cannot claim your own items' });
         return;
     }
 
-    const itemId = parseToInt(req.params.itemId);
+    const itemId = parseInt(req.params.itemId);
     var claimStatus = JSON.parse(claimStatuses[user] || '[]');
     claimStatus[itemId] = curUser.email;
     claimStatuses[user] = JSON.stringify(claimStatus);
@@ -154,10 +160,14 @@ apiRouter.post('/registry/:username/:itemId/claim', verifyAuth, async (req, res)
 // UnclaimItem
 apiRouter.post('/registry/:username/:itemId/unclaim', verifyAuth, async (req, res) => {
     const user = req.params.username;
-    const itemId = parseToInt(req.params.itemId);
+    const itemId = parseInt(req.params.itemId);
     var claimStatus = JSON.parse(claimStatuses[user] || '[]');
     claimStatus[itemId] = "null";
     claimStatuses[user] = JSON.stringify(claimStatus);
+
+    console.log('unclaim - user param:', user);
+console.log('unclaim - claimStatuses keys:', Object.keys(claimStatuses));
+
     res.send(claimStatuses[user]);
 });
 

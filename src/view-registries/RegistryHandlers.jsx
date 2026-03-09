@@ -3,7 +3,7 @@ export function parseRegistryItems(thingsToParse){
 }
 
 export function itemsExist(items){
-  return items !== "" && items !== "undefined" && items !== undefined;
+  return items !== "" && items !== "undefined" && items !== undefined && items !== "[]";
 }
 
 export async function removeRegistryItem(itemIndex, username, setRegistryItems, setClaimedStatus) {

@@ -111,7 +111,7 @@ apiRouter.post('/registry/:itemName', verifyAuth, async (req, res) => {
     items.push(item);
     claimStatus.push("null");
     userItems[user.email] = JSON.stringify(items);
-    claimStatuses[user.email] = JSON.stringify(userItems);
+    claimStatuses[user.email] = JSON.stringify(claimStatus);
     res.send(userItems[user.email]);
 });
 
@@ -120,19 +120,17 @@ apiRouter.delete('/registry/:username/:itemId', verifyAuth, async (req, res) => 
     const user = req.params.username;
     const itemId = parseInt(req.params.itemId);
 
-    console.log('user:', user);
-    console.log('item:', req.params.itemId);
-    console.log('userItems:', userItems[user]);
-    console.log('allUserItems:', userItems)
-
     var items = JSON.parse(userItems[user] || '[]');
     var claimStatus = JSON.parse(claimStatuses[user] || '[]');
+
+    if (!Array.isArray(items)) items = [];
+    if (!Array.isArray(claimStatus)) claimStatus = [];
+
     items.splice(itemId, 1);
     claimStatus.splice(itemId, 1);
     userItems[user] = JSON.stringify(items);
     claimStatuses[user] = JSON.stringify(claimStatus);
-    res.send({ items: userItems[user], claimStatuses: claimStatuses[user] 
-   });
+    res.send({ items: userItems[user], claimStatuses: claimStatuses[user] });
 });
 
 // ClaimItem

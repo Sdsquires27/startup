@@ -20,7 +20,7 @@ async function changeRegistryItems(itemName){
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
   })
-      .then((response) => response.json())
+      .then((response) => response.text())
       .then((items) => {
         setRegistryItems(items);
   });
@@ -28,10 +28,12 @@ async function changeRegistryItems(itemName){
 
   function populateRegistryItems(){
     const itemList = [];
-    for (let i = 0; i < registryItems.length; i++){
-      itemList.push(<tr>
+    var [parsedRegistryItems] = parseRegistryItems([registryItems])
+
+    for (let i = 0; i < parsedRegistryItems.length; i++){
+      itemList.push(<tr key={i}>
               <td>
-                {registryItems[i]}
+                {parsedRegistryItems[i]}
               </td>
               <td>
                 <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem(i, userName, setRegistryItems, null)}/>

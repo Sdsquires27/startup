@@ -9,8 +9,19 @@ const [Holiday, setHoliday] = React.useState('[Holiday Name]');
 const [DaysUntilHoliday, setDaysUntilHoliday] = React.useState('[Days Until Holiday]');
 
 React.useEffect(() => {
-    setHoliday("Easter");
-    setDaysUntilHoliday("100");
+  var nextHoliday;
+
+  fetch(`https://date.nager.at/api/v3/NextPublicHolidays/US`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data[0].date);
+      const today = new Date();
+      const nextHoliday = new Date(data[0].date);
+      const datesDiff = Math.ceil((nextHoliday - today) / (1000 * 60 * 60 * 24)); // converts from milliseconds to days    
+      setHoliday(data[0].name);
+      setDaysUntilHoliday(datesDiff);
+    })
+    .catch();
 }, []);
   return (
        <main className="container-fluid text-center">

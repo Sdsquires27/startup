@@ -139,7 +139,6 @@ apiRouter.delete('/registry/:username/:itemId', verifyAuth, async (req, res) => 
 
 // ClaimItem
 apiRouter.post('/registry/:username/:itemId/claim', verifyAuth, async (req, res) => {
-      console.log('CLAIM HIT - user:', req.params.username, 'item:', req.params.itemId);
 
     const user = req.params.username;
     const curUser = await findUser('token', req.cookies[authCookieName]);
@@ -164,9 +163,6 @@ apiRouter.post('/registry/:username/:itemId/unclaim', verifyAuth, async (req, re
     var claimStatus = JSON.parse(claimStatuses[user] || '[]');
     claimStatus[itemId] = "null";
     claimStatuses[user] = JSON.stringify(claimStatus);
-
-    console.log('unclaim - user param:', user);
-console.log('unclaim - claimStatuses keys:', Object.keys(claimStatuses));
 
     res.send(claimStatuses[user]);
 });

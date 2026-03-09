@@ -74,7 +74,7 @@ apiRouter.post('/registry/:itemName', verifyAuth, async (req, res) => {
     res.send(userItems[user]);
 });
 ```
-
+The whole process turned out to be really hard, with a whole lot of debugging. It's become more and more of a process to comb through my code for errors, but I've managed!
 
 # Unit Notes:
 # Unit 0 Notes

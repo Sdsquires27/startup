@@ -108,19 +108,19 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **All functionality implemented or mocked out** - It's there, using primarily loginState to mirror functionality. WebSocket implemented through the user "WebSocketUser", who claims items every ten seconds. Everything works as intended. Users can add items to their registry, which can then be seen by other users. When seen, they can be claimed by that user, unclaimed, and marked as gifted, removing it from the user's original registry.
+- [x] **All functionality implemented or mocked out** - It's there, using primarily loginState to mirror functionality. WebSocket implemented by a call to update the server every ten seconds, checking if another user has claimed things. Everything works as intended. Users can add items to their registry, which can then be seen by other users. When seen, they can be claimed by that user, unclaimed, and marked as gifted, removing it from the user's original registry.
 - [x] **Hooks** - Extensive use of useEffect and useReact in my-registry, view-registry, and login.
 
 ## 🚀 Service deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - Done, in the service directory
+- [x] **Static middleware for frontend** - Done, in index.js
+- [x] **Calls to third party endpoints** - Done in login, where a call to the next holiday is made
+- [x] **Backend service endpoints** - Outside of login and logout functionality, six endpoints made for registry dealing
+- [x] **Frontend calls service endpoints** - Called primarily in my-registry and view-registry (outside of login and logout)
+- [x] **Supports registration, login, logout, and restricted endpoint** - Done! Restricted endpoints in index.js all require verifyAuth to be called before being used.
 
 
 ## 🚀 DB deliverable

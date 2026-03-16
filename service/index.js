@@ -6,6 +6,19 @@ const express = require('express');
 const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
+const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
+const client = new MongoClient(url);
+const db = client.db('simon');
+
+(async function testConnection() {
+  try {
+    await db.command({ ping: 1 });
+  } catch (ex) {
+    console.log(`Unable to connect to database with ${url} because ${ex.message}`);
+    process.exit(1);
+  }
+})();
+
 app.use(express.json());
 app.use(cookieParser());
 

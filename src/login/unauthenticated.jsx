@@ -2,10 +2,6 @@ import React from 'react';
 import {MessageDialog} from './messageDialog';
 import './unauthenticated.css';
 
-
-
-
-
 export function Unauthenticated(properties) {
     const [userName, setUserName] = React.useState(properties.userName);
     const [password, setPassword] = React.useState('');
@@ -37,7 +33,7 @@ export function Unauthenticated(properties) {
         else 
         {
             const body = await response.json();
-            setDisplayError(`Error: ${body.msg}`);
+            setDisplayError(`⚠ Error: ${body.msg}`);
         }
   }
     return(

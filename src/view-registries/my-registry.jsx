@@ -66,7 +66,7 @@ async function changeRegistryItems(itemName){
           </table>
         )}
 
-        {registryItems.length === 0 && (
+        {!itemsExist(registryItems) && (
           <p>It looks like your registry is empty! Use the form below to add more items to your registry!</p>
         )}
 

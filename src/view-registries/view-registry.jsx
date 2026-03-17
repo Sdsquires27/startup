@@ -4,11 +4,11 @@ import {itemsExist, removeRegistryItem } from './RegistryHandlers';
 
 
 export function ViewRegistry({userName}) {
-  const [curRegistry, setCurRegistry] = React.useState();
-  const [curRegistryItems, setCurRegistryItems] = React.useState();
-  const [curClaimedStatus, setCurClaimedStatus] = React.useState();
-  const [curRegistryIds, setCurRegistryIds] = React.useState();
-  const [curUser, setCurUser] = React.useState();
+  const [curRegistry, setCurRegistry] = React.useState([]);
+  const [curRegistryItems, setCurRegistryItems] = React.useState([]);
+  const [curClaimedStatus, setCurClaimedStatus] = React.useState([]);
+  const [curRegistryIds, setCurRegistryIds] = React.useState([]);
+  const [curUser, setCurUser] = React.useState('');
 
 setInterval(async () => {
   update();
@@ -17,7 +17,7 @@ setInterval(async () => {
 async function update()
 {
     fetch(`/api/registry/${curUser}`)
-      .then((response) => response.text)
+      .then((response) => response.json())
       .then((items) =>{
         setCurRegistry(items);
       });
@@ -31,6 +31,7 @@ async function update()
   }, [curUser]);
 
   React.useEffect(() => {
+    if (!curRegistry.length) return;
     setCurRegistryItems(curRegistry.map(item=>item.name));
     setCurClaimedStatus(curRegistry.map(item=>item.status));
     setCurRegistryIds(curRegistry.map(item=>item.id));
@@ -42,27 +43,20 @@ function findUser(name){
 }
 
 async function handleClick(itemIndex){ // handle claiming of item
-  var [claimedStatus] = parseRegistryItems([curClaimedStatus]);
-  if (claimedStatus[itemIndex] === "null")
+  const status = curRegistry.find(item => item.id === itemIndex)?.status;
+  if (status === null)
   {
     await fetch(`/api/registry/${curUser}/${itemIndex}/claim`,{
       method: 'POST'
-    })
-      .then((response) => response.text())
-      .then((claimStatuses) => {
-        setCurClaimedStatus(claimStatuses);
-      });
+    });
   }
   else
   {
       await fetch(`/api/registry/${curUser}/${itemIndex}/unclaim`,{
       method: 'POST'
-    })
-      .then((response) => response.text())
-      .then((claimStatuses) => {
-        setCurClaimedStatus(claimStatuses);
-      });
+    });
   }
+  update();
 }
 
 // Unclaiming item
@@ -85,7 +79,7 @@ function PopulateRegistryItems(){
     const itemList = [];
     for (let i = 0; i < curRegistryItems.length; i++){
       var claimedUser = curClaimedStatus[i];
-      if (claimedUser === "null") var pictureLink = "openCircle.png";
+      if (claimedUser === null) var pictureLink = "openCircle.png";
       else claimedUser === userName ? pictureLink = "checkedImage.png" : pictureLink = "closedCircle.png";
       
       itemList.push(
@@ -114,7 +108,7 @@ function PopulateClaimedItems(){
                 <img src="/trash.png" width="10" height="10" className="pic-icon" onClick={() => handleDelete(curRegistryIds[i])}/>
               </td>
               <td>
-                <img src="/checkmark.png" width="10" height="10" className="pic-icon" onClick={() => removeRegistryItem(curRegistryIds[i], userName, update)}/>
+                <img src="/checkmark.png" width="10" height="10" className="pic-icon" onClick={() => removeRegistryItem(curRegistryIds[i], curUser, update)}/>
               </td>
             </tr>
       );

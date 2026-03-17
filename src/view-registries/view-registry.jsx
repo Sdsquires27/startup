@@ -1,6 +1,6 @@
 import React from 'react';
 import './view-registry.css'
-import { parseRegistryItems, itemsExist, removeRegistryItem } from './RegistryHandlers';
+import {itemsExist, removeRegistryItem } from './RegistryHandlers';
 
 
 export function ViewRegistry({userName}) {

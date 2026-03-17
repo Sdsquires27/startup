@@ -46,13 +46,12 @@ async function addRegistryItem(user, item)
         {upsert: true});
 }
 
-async function removeRegistryItem(user, index)
+async function removeRegistryItem(user, id)
 {
     await userItems.updateOne(
         {user:user.email}, 
         {
-            $unset: {[`items.${index}`]:1},
+            $pull: {items: {id:id}}
         });
-    await userItems.updateOne({user:user.email}, {$pull: {items:null}});
 }
 

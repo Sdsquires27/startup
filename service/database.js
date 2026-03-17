@@ -76,3 +76,8 @@ async function unclaimItem(user, id)
         {arrayFilters: [{"item.id":id}]}
     );
 }
+
+async function getItems(user)
+{
+    return (await userItems.findOne({user:user.email}))?.items || [];
+}

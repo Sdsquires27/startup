@@ -4,33 +4,37 @@ import { parseRegistryItems, itemsExist, removeRegistryItem } from './RegistryHa
 
 
 export function ViewRegistry({userName}) {
+  const [curRegistry, setCurRegistry] = React.useState();
   const [curRegistryItems, setCurRegistryItems] = React.useState();
   const [curClaimedStatus, setCurClaimedStatus] = React.useState();
+  const [curRegistryIds, setCurRegistryIds] = React.useState();
   const [curUser, setCurUser] = React.useState();
 
 setInterval(async () => {
-  const response = await fetch(`/api/registry/${curUser}/claimStatus`);
-  const data = await response.text();
-  setCurClaimedStatus(data); 
+  update();
 }, 10000); // simulate WebSocket updates every 10 seconds
+
+async function update()
+{
+    fetch(`/api/registry/${curUser}`)
+      .then((response) => response.text)
+      .then((items) =>{
+        setCurRegistry(items);
+      });
+}
 
   //When curUser is updated
   React.useEffect(() => {
     if (!curUser) return;
-    
-    fetch(`/api/registry/${curUser}`)
-          .then((response) => response.text())
-          .then((items) => {
-            setCurRegistryItems(items);
-          });
-
-  fetch(`/api/registry/${curUser}/claimStatus`)
-          .then((response) => response.text())
-          .then((items) => {
-            setCurClaimedStatus(items);
-          });
+    update();
 
   }, [curUser]);
+
+  React.useEffect(() => {
+    setCurRegistryItems(curRegistry.map(item=>item.name));
+    setCurClaimedStatus(curRegistry.map(item=>item.status));
+    setCurRegistryIds(curRegistry.map(item=>item.id));
+  }, [curRegistry]);
 
 function findUser(name){
   if (name === "" || name === userName) return;
@@ -65,11 +69,8 @@ async function handleClick(itemIndex){ // handle claiming of item
 async function handleDelete(itemIndex){
   await fetch(`/api/registry/${curUser}/${itemIndex}/unclaim`,{
       method: 'POST'
-    })
-      .then((response) => response.text())
-      .then((claimStatuses) => {
-        setCurClaimedStatus(claimStatuses);
-      });
+    });
+    update();
 }
 
 function testInclusion(list, str){ // this is necessary due to substrings
@@ -82,19 +83,18 @@ function testInclusion(list, str){ // this is necessary due to substrings
 
 function PopulateRegistryItems(){
     const itemList = [];
-    var [items, claimedStatus] = parseRegistryItems([curRegistryItems, curClaimedStatus]);
-    for (let i = 0; i < items.length; i++){
-      var claimedUser = claimedStatus[i];
+    for (let i = 0; i < curRegistryItems.length; i++){
+      var claimedUser = curClaimedStatus[i];
       if (claimedUser === "null") var pictureLink = "openCircle.png";
       else claimedUser === userName ? pictureLink = "checkedImage.png" : pictureLink = "closedCircle.png";
       
       itemList.push(
             <tr key={i}>
               <td>
-                {items[i]}
+                {curRegistryItems[i]}
               </td>
               <td>
-                <img src={pictureLink} className="pic-icon" width="10" height="10" onClick={() => handleClick(i)}/>
+                <img src={pictureLink} className="pic-icon" width="10" height="10" onClick={() => handleClick(curRegistryIds[i])}/>
               </td>
             </tr>);
       }  
@@ -103,19 +103,18 @@ function PopulateRegistryItems(){
 
 function PopulateClaimedItems(){
   const itemList = [];
-  var [items, claimedStatus] = parseRegistryItems([curRegistryItems, curClaimedStatus]);
-  for (let i = 0; i < items.length; i++){
-    if (claimedStatus[i] === userName){
+  for (let i = 0; i < curRegistry.length; i++){
+    if (curClaimedStatus[i] === userName){
       itemList.push(
         <tr key={i}>
               <td>
-                {items[i]}
+                {curRegistryItems[i]}
               </td>
               <td>
-                <img src="/trash.png" width="10" height="10" className="pic-icon" onClick={() => handleDelete(i)}/>
+                <img src="/trash.png" width="10" height="10" className="pic-icon" onClick={() => handleDelete(curRegistryIds[i])}/>
               </td>
               <td>
-                <img src="/checkmark.png" width="10" height="10" className="pic-icon" onClick={() => removeRegistryItem(i, userName, setCurRegistryItems, setCurClaimedStatus)}/>
+                <img src="/checkmark.png" width="10" height="10" className="pic-icon" onClick={() => removeRegistryItem(curRegistryIds[i], userName, update)}/>
               </td>
             </tr>
       );
@@ -157,7 +156,7 @@ function PopulateClaimedItems(){
             </tbody>
           </table>
         
-        {testInclusion(parseRegistryItems([curClaimedStatus])[0], userName) && (
+        {testInclusion(curClaimedStatus, userName) && (
         <table className="table table-striped table-bordered equal-sized-table">
             <thead>
             <tr>

@@ -16,6 +16,7 @@ async function getItems()
       });
 }
 
+// Load the items initially
   React.useEffect(() =>{
     getItems();
   }, []);
@@ -37,7 +38,7 @@ async function changeRegistryItems(itemName){
                 {registryItems[i].item}
               </td>
               <td>
-                <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem(registryItems[i].id, userName, setRegistryItems, null)}/>
+                <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem(registryItems[i].id, userName, getItems)}/>
               </td>
             </tr>);
   }

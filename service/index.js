@@ -100,7 +100,8 @@ apiRouter.post('/registry/:itemName', verifyAuth, async (req, res) => {
 // DeleteItem
 apiRouter.delete('/registry/:username/:itemId', verifyAuth, async (req, res) => {
     const user = req.params.username;
-    const itemId = parseInt(req.params.itemId);
+    const itemId = req.params.itemId;
+    console.log("Delete route hit:", user, itemId);
     res.send(await DB.removeRegistryItem(user, itemId));
 });
 
@@ -115,7 +116,7 @@ apiRouter.post('/registry/:username/:itemId/claim', verifyAuth, async (req, res)
         return;
     }
 
-    const itemId = parseInt(req.params.itemId);
+    const itemId = req.params.itemId;
     res.send(await DB.claimItem(user, itemId, curUser));
 
 });
@@ -123,7 +124,7 @@ apiRouter.post('/registry/:username/:itemId/claim', verifyAuth, async (req, res)
 // UnclaimItem
 apiRouter.post('/registry/:username/:itemId/unclaim', verifyAuth, async (req, res) => {
     const user = req.params.username;
-    const itemId = parseInt(req.params.itemId);
+    const itemId = req.params.itemId;
     res.send(await DB.unclaimItem(user, itemId));
 });
 

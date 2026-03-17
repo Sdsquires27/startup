@@ -7,7 +7,7 @@ export function MyRegistry({userName}) {
 
   const [registryItems, setRegistryItems] = React.useState([]);
 
-async function getItems()
+function getItems()
 {
     fetch(`/api/registry/${userName}`)
       .then((response) => response.json())
@@ -35,7 +35,7 @@ async function changeRegistryItems(itemName){
     for (let i = 0; i < registryItems.length; i++){
       itemList.push(<tr key={i}>
               <td>
-                {registryItems[i].item}
+                {registryItems[i].name}
               </td>
               <td>
                 <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem(registryItems[i].id, userName, getItems)}/>
@@ -66,7 +66,7 @@ async function changeRegistryItems(itemName){
           </table>
         )}
 
-        {!itemsExist(registryItems) && (
+        {registryItems.length === 0 && (
           <p>It looks like your registry is empty! Use the form below to add more items to your registry!</p>
         )}
 

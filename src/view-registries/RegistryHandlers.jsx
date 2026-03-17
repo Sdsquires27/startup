@@ -3,6 +3,7 @@ export function itemsExist(items){
 }
 
 export async function removeRegistryItem(itemIndex, username, updateFunction) {
+  console.log("Delete request: " + username + " " + itemIndex);
   await fetch(`/api/registry/${username}/${itemIndex}`, {
     method: 'DELETE',
   });

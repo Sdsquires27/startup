@@ -53,8 +53,9 @@ async function addRegistryItem(user, item)
 
 async function removeRegistryItem(user, id)
 {
+    console.log("DB remove:", user, id);
     await userItems.updateOne(
-        {user:user.email}, 
+        {user:user}, 
         {
             $pull: {items: {id:id}}
         });

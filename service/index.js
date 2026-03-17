@@ -80,7 +80,7 @@ const verifyAuth = async (req, res, next) => {
 //GetRegistry
 apiRouter.get('/registry/:username', verifyAuth, async (req, res) => {
     const user = req.params.username;
-    res.send(await DB.getItems(user).map(item=>item.name));
+    res.send(await DB.getItems(user));
 });
 
 //GetClaimedStatuses

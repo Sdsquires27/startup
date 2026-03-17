@@ -5,38 +5,39 @@ import { parseRegistryItems, itemsExist, removeRegistryItem } from './RegistryHa
 export function MyRegistry({userName}) {
 
 
-  const [registryItems, setRegistryItems] = React.useState('[]');
+  const [registryItems, setRegistryItems] = React.useState([]);
 
-  React.useEffect(() =>{
+async function getItems()
+{
     fetch(`/api/registry/${userName}`)
-      .then((response) => response.text())
+      .then((response) => response.json())
       .then((items) => {
         setRegistryItems(items);
       });
+}
+
+  React.useEffect(() =>{
+    getItems();
   }, []);
 
 async function changeRegistryItems(itemName){
-  await fetch(`/api/registry/${itemName}`, {
+  fetch(`/api/registry/${itemName}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-  })
-      .then((response) => response.text())
-      .then((items) => {
-        setRegistryItems(items);
   });
+  getItems();
 }
 
   function populateRegistryItems(){
     const itemList = [];
-    var [parsedRegistryItems] = parseRegistryItems([registryItems])
 
-    for (let i = 0; i < parsedRegistryItems.length; i++){
+    for (let i = 0; i < registryItems.length; i++){
       itemList.push(<tr key={i}>
               <td>
-                {parsedRegistryItems[i]}
+                {registryItems[i].item}
               </td>
               <td>
-                <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem(i, userName, setRegistryItems, null)}/>
+                <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem(registryItems[i].id, userName, setRegistryItems, null)}/>
               </td>
             </tr>);
   }

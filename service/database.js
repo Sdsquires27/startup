@@ -63,7 +63,7 @@ async function removeRegistryItem(user, id)
 async function claimItem(user, id, newClaim)
 {
     await userItems.updateOne(
-        {user:user.email},
+        {user:user},
         {
             $set: {"items.$[item].status":newClaim}
         },
@@ -74,7 +74,7 @@ async function claimItem(user, id, newClaim)
 async function unclaimItem(user, id)
 {
     await userItems.updateOne(
-        {user:user.email},
+        {user:user},
         {
             $set: {"items.$[item].status":null}
         },
@@ -84,7 +84,7 @@ async function unclaimItem(user, id)
 
 async function getItems(user)
 {
-    return (await userItems.findOne({user:user.email}))?.items || [];
+    return (await userItems.findOne({user:user}))?.items || [];
 }
 
 module.exports = 

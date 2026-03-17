@@ -2,6 +2,8 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const express = require('express');
+const DB = require('./database.js');
+
 const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -9,11 +11,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // memory data structures
-let users = [];
-let userItems = {};
-let claimStatuses = {};
 const authCookieName = "token";
-
 
 let apiRouter = express.Router();
 app.use(`/api`, apiRouter);
@@ -50,6 +48,7 @@ apiRouter.post('/auth/login', async (req, res) => {
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
       user.token = uuid.v4();
+      await DB.updateUser(user);
       setAuthCookie(res, user.token);
       res.send({ email: user.email });
       return;
@@ -62,7 +61,7 @@ apiRouter.post('/auth/login', async (req, res) => {
 apiRouter.delete('/auth/logout', async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   if (user) {
-    delete user.token;
+    await DB.updateUserRemoveAuth(user);
   }
   res.clearCookie(authCookieName);
   res.status(204).end();
@@ -81,23 +80,13 @@ const verifyAuth = async (req, res, next) => {
 //GetRegistry
 apiRouter.get('/registry/:username', verifyAuth, async (req, res) => {
     const user = req.params.username;
-    if (!userItems[user]) {
-        res.send(null);
-    } 
-    else {
-        res.send(userItems[user]);
-    }
+    res.send(await DB.getItems(user).map(item=>item.name));
 });
 
 //GetClaimedStatuses
 apiRouter.get('/registry/:username/claimStatus', verifyAuth, async (req, res) => {
     const user = req.params.username;
-    if (!userItems[user]) {
-        res.send(null);
-    } 
-    else {
-        res.send(claimStatuses[user]);
-    }
+    res.send(await DB.getItems(user).map(item=>item.status));
 });
 
 
@@ -105,35 +94,14 @@ apiRouter.get('/registry/:username/claimStatus', verifyAuth, async (req, res) =>
 apiRouter.post('/registry/:itemName', verifyAuth, async (req, res) => {
     const user = await findUser('token', req.cookies[authCookieName]);
     const item = req.params.itemName;
-    var items = JSON.parse(userItems[user.email] || '[]');
-    var claimStatus = JSON.parse(claimStatuses[user.email] || '[]');
-
-    if (!Array.isArray(items)) items = [];
-    if (!Array.isArray(claimStatus)) claimStatus = [];
-
-    items.push(item);
-    claimStatus.push("null");
-    userItems[user.email] = JSON.stringify(items);
-    claimStatuses[user.email] = JSON.stringify(claimStatus);
-    res.send(userItems[user.email]);
+    res.send(await DB.addRegistryItem(user, item));
 });
 
 // DeleteItem
 apiRouter.delete('/registry/:username/:itemId', verifyAuth, async (req, res) => {
     const user = req.params.username;
     const itemId = parseInt(req.params.itemId);
-
-    var items = JSON.parse(userItems[user] || '[]');
-    var claimStatus = JSON.parse(claimStatuses[user] || '[]');
-
-    if (!Array.isArray(items)) items = [];
-    if (!Array.isArray(claimStatus)) claimStatus = [];
-
-    items.splice(itemId, 1);
-    claimStatus.splice(itemId, 1);
-    userItems[user] = JSON.stringify(items);
-    claimStatuses[user] = JSON.stringify(claimStatus);
-    res.send({ items: userItems[user], claimStatuses: claimStatuses[user] });
+    res.send(await DB.removeRegistryItem(user, itemId));
 });
 
 // ClaimItem
@@ -148,10 +116,7 @@ apiRouter.post('/registry/:username/:itemId/claim', verifyAuth, async (req, res)
     }
 
     const itemId = parseInt(req.params.itemId);
-    var claimStatus = JSON.parse(claimStatuses[user] || '[]');
-    claimStatus[itemId] = curUser.email;
-    claimStatuses[user] = JSON.stringify(claimStatus);
-    res.send(claimStatuses[user]);
+    res.send(await DB.claimItem(user, itemId, curUser));
 
 });
 
@@ -159,11 +124,7 @@ apiRouter.post('/registry/:username/:itemId/claim', verifyAuth, async (req, res)
 apiRouter.post('/registry/:username/:itemId/unclaim', verifyAuth, async (req, res) => {
     const user = req.params.username;
     const itemId = parseInt(req.params.itemId);
-    var claimStatus = JSON.parse(claimStatuses[user] || '[]');
-    claimStatus[itemId] = "null";
-    claimStatuses[user] = JSON.stringify(claimStatus);
-
-    res.send(claimStatuses[user]);
+    res.send(await DB.unclaimItem(user, itemId));
 });
 
 // Helper functions

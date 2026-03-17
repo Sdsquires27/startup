@@ -6,7 +6,6 @@ const client = new MongoClient(url);
 const db = client.db('startup');
 const userCollection = db.collection("user");
 const userItems = db.collection("userItems");
-const claimStatuses = db.collections("claimStatuses");
 
 (async function testConnection() {
   try {
@@ -36,3 +35,24 @@ async function updateUserRemoveAuth(user)
 {
     await userCollection.updateOne({email: user.email}, {$unset: {token: 1}});
 }
+
+async function addRegistryItem(user, item)
+{
+    await userItems.updateOne(
+        {user: user.email}, 
+        {
+            $push: {items: {id:crypto.randomUUID(), name:item, status:null}},
+        }, 
+        {upsert: true});
+}
+
+async function removeRegistryItem(user, index)
+{
+    await userItems.updateOne(
+        {user:user.email}, 
+        {
+            $unset: {[`items.${index}`]:1},
+        });
+    await userItems.updateOne({user:user.email}, {$pull: {items:null}});
+}
+

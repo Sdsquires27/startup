@@ -17,8 +17,22 @@ const claimStatuses = db.collections("claimStatuses");
   }
 })();
 
-function getUser(email) {
+function getUser(email) 
+{
   return userCollection.findOne({ email: email });
 }
 
+function getUserByToken(token)
+{
+    return userCollection.findOne({token: token});
+}
 
+async function updateUser(user)
+{
+    await userCollection.updateOne({email:user.email}, {$set:user});
+}
+
+async function updateUserRemoveAuth(user)
+{
+    await userCollection.updateOne({email: user.email}, {$unset: {token: 1}});
+}

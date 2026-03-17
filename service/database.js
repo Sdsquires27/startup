@@ -55,3 +55,24 @@ async function removeRegistryItem(user, id)
         });
 }
 
+async function claimItem(user, id, newClaim)
+{
+    await userItems.updateOne(
+        {user:user.email},
+        {
+            $set: {"items.$[item].status":newClaim}
+        },
+        {arrayFilters: [{"item.id":id}]}
+    );
+}
+
+async function unclaimItem(user, id)
+{
+    await userItems.updateOne(
+        {user:user.email},
+        {
+            $set: {"items.$[item].status":null}
+        },
+        {arrayFilters: [{"item.id":id}]}
+    );
+}

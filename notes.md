@@ -77,6 +77,21 @@ apiRouter.post('/registry/:itemName', verifyAuth, async (req, res) => {
 ```
 The whole process turned out to be really hard, with a whole lot of debugging. It's become more and more of a process to comb through my code for errors, but I've managed!
 
+## Database
+This wasn't too hard. I think the main thing was that I had a lot of ways my code worked which weren't sustainable based on how this database functioned, so I changed it all around on the frontend side of things. But pretty simple overall--I think the biggest takeaway is to build the frontend with as little parsing and things as possible. Most parsing and similar needs were handled by the time it got out of the backend. Also building functions that just do one thing--that would have made debugging much easier. Cleaner code is better!
+I also found out about things like random UUID, which was super useful for making unique item ids:
+```js
+async function addRegistryItem(user, item)
+{
+    await userItems.updateOne(
+        {user: user.email}, 
+        {
+            $push: {items: {id:crypto.randomUUID(), name:item, status:null}},
+        }, 
+        {upsert: true});
+}
+```
+
 # Unit Notes:
 # Unit 0 Notes
 CS 260

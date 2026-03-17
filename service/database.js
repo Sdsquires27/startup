@@ -26,6 +26,11 @@ function getUserByToken(token)
     return userCollection.findOne({token: token});
 }
 
+async function addUser(user) 
+{
+  await userCollection.insertOne(user);
+}
+
 async function updateUser(user)
 {
     await userCollection.updateOne({email:user.email}, {$set:user});
@@ -81,3 +86,17 @@ async function getItems(user)
 {
     return (await userItems.findOne({user:user.email}))?.items || [];
 }
+
+module.exports = 
+{
+    getUser,
+    getUserByToken,
+    addUser,
+    updateUser,
+    updateUserRemoveAuth,
+    addRegistryItem,
+    removeRegistryItem,
+    claimItem,
+    unclaimItem,
+    getItems
+};

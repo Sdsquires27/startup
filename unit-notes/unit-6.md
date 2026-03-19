@@ -408,3 +408,8 @@ beds: 1
 }
 ```
 
+## March 17
+### Backend Testing
+A common industry practice is using test driven development (TDD) for testing service endpoints. It is easier than writing UI tests because it does not require a browser, but still requires effort to write good tests. The current champion is Jest, which has a VS Code extension. Look at the example on the website. This means you can write tests first and then write your code based on the design represented by the tests.
+### Frontend Testing
+Frontend code is harder to test, since automated tests can’t drive UI development. You need a browser, which will interact slightly differently with the code, and humans will interact with things in ways that they shouldn’t. So, automated external processes were introduced, and Playwright is used as the example in this one. BrowserStack can be used to test this on multiple browsers and devices. 

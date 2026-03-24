@@ -1,6 +1,6 @@
 import React from 'react';
 import './my-registry.css';
-import {itemsExist, removeRegistryItem } from './RegistryHandlers';
+import {itemsExist, registryHandler, removeRegistryItem} from './RegistryHandlers';
 
 export function MyRegistry({userName}) {
 
@@ -16,9 +16,23 @@ function getItems()
       });
 }
 
-// Load the items initially
+// Load the items initially, set items
   React.useEffect(() =>{
     getItems();
+    const handler = (event) => {
+      if (event.type === 'ITEM_UPDATED') {
+        setRegistryItems(prev => prev.map(i => i.id === event.payload.id ? event.payload : i));
+      }
+      if (event.type === 'ITEM_ADDED') {
+        setRegistryItems(prev => [...prev, event.payload]);
+      }
+      if (event.type === 'ITEM_DELETED') {
+        setRegistryItems(prev => prev.filter(i => i.id !== event.payload.id));
+      }
+    };
+
+    registryHandler.addHandler(handler);
+    return () => registryHandler.removeHandler(handler);
   }, []);
 
 async function changeRegistryItems(itemName){
@@ -26,7 +40,9 @@ async function changeRegistryItems(itemName){
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
   });
-  getItems();
+  const newItem = await response.json();
+  setRegistryItems(prev => [...prev, newItem]);
+  registryHandler.broadcastEvent('ITEM_ADDED', newItem);
 }
 
   function populateRegistryItems(){
@@ -38,7 +54,7 @@ async function changeRegistryItems(itemName){
                 {registryItems[i].name}
               </td>
               <td>
-                <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem(registryItems[i].id, userName, getItems)}/>
+                <img className="pic-icon" src="trash.png" width="10" height="10" onClick={() => removeRegistryItem(registryItems[i].id, userName, setRegistryItems)}/>
               </td>
             </tr>);
   }

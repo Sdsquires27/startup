@@ -1,6 +1,6 @@
 import React from 'react';
 import './view-registry.css'
-import {itemsExist, removeRegistryItem } from './RegistryHandlers';
+import {itemsExist, registryHandler, removeRegistryItem } from './RegistryHandlers';
 
 
 export function ViewRegistry({userName}) {
@@ -9,10 +9,6 @@ export function ViewRegistry({userName}) {
   const [curClaimedStatus, setCurClaimedStatus] = React.useState([]);
   const [curRegistryIds, setCurRegistryIds] = React.useState([]);
   const [curUser, setCurUser] = React.useState('');
-
-setInterval(async () => {
-  update();
-}, 10000); // simulate WebSocket updates every 10 seconds
 
 async function update()
 {
@@ -28,6 +24,23 @@ async function update()
     if (!curUser) return;
     update();
 
+    const handler = (event) => 
+    {
+      if (event.type === 'ITEM_ADDED') {
+        setCurRegistry(prev => [...prev, event.payload]);
+      }
+      if (event.type === 'ITEM_DELETED') {
+        setCurRegistry(prev => prev.filter(i => i.id !== event.payload.id));
+      }
+      if (event.type === 'ITEM_UPDATED') {
+        setCurRegistry(prev => prev.map(i => i.id === event.payload.id ? event.payload : i));
+      }
+      if (event.type === 'ITEM_CLAIMED') {
+        setCurRegistry(prev => prev.map(i => i.id === event.payload.id ? event.payload : i));
+      }
+    };
+    registryHandler.addHandler(handler);
+    return () => registryHandler.removeHandler(handler);
   }, [curUser]);
 
   React.useEffect(() => {
@@ -64,7 +77,10 @@ async function handleDelete(itemIndex){
   await fetch(`/api/registry/${curUser}/${itemIndex}/unclaim`,{
       method: 'POST'
     });
-    update();
+  const item = curRegistry.find(i => i.id === itemIndex);
+  const updatedItem = { ...item, status: null };
+  setCurRegistry(prev => prev.map(i => i.id === itemIndex ? updatedItem : i));
+  registryHandler.broadcastEvent('ITEM_CLAIMED', updatedItem);
 }
 
 function testInclusion(list, str){ // this is necessary due to substrings
@@ -108,7 +124,7 @@ function PopulateClaimedItems(){
                 <img src="/trash.png" width="10" height="10" className="pic-icon" onClick={() => handleDelete(curRegistryIds[i])}/>
               </td>
               <td>
-                <img src="/checkmark.png" width="10" height="10" className="pic-icon" onClick={() => removeRegistryItem(curRegistryIds[i], curUser, update)}/>
+                <img src="/checkmark.png" width="10" height="10" className="pic-icon" onClick={() => removeRegistryItem(curRegistryIds[i], curUser, setCurRegistryItems)}/>
               </td>
             </tr>
       );

@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const express = require('express');
 const DB = require('./database.js');
+const { peerProxy } = require('./peerProxy.js');
 
 const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -161,6 +162,8 @@ function setAuthCookie(res, authToken) {
 }
 
 
-app.listen(port, () => {
+const service = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
+
+peerProxy(service);

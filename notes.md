@@ -93,6 +93,9 @@ async function addRegistryItem(user, item)
 }
 ```
 
+## Websocket
+It doesn't look like the Simon websocket took too many changes, and I'll be interested to see how much work will be required on my own end. It all made sense to me, especially with the debugging session.
+
 # Unit Notes:
 # Unit 0 Notes
 # CS 260

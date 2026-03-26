@@ -55,22 +55,26 @@ function findUser(name){
   setCurUser(name);
 }
 
-async function handleClick(itemIndex){ // handle claiming of item
-  const status = curRegistry.find(item => item.id === itemIndex)?.status;
-  if (status === null)
+  async function handleClick(itemIndex) 
   {
-    await fetch(`/api/registry/${curUser}/${itemIndex}/claim`,{
-      method: 'POST'
-    });
+    const item = curRegistry.find(item => item.id === itemIndex);
+    const status = item?.status;
+
+    if (status === null) 
+    {
+      await fetch(`/api/registry/${curUser}/${itemIndex}/claim`, { method: 'POST' });
+      const updatedItem = { ...item, status: userName };
+      setCurRegistry(prev => prev.map(i => i.id === itemIndex ? updatedItem : i));
+      registryHandler.broadcastEvent('ITEM_CLAIMED', updatedItem);
+    } 
+    else 
+    {
+      await fetch(`/api/registry/${curUser}/${itemIndex}/unclaim`, { method: 'POST' });
+      const updatedItem = { ...item, status: null };
+      setCurRegistry(prev => prev.map(i => i.id === itemIndex ? updatedItem : i));
+      registryHandler.broadcastEvent('ITEM_CLAIMED', updatedItem);
+    }
   }
-  else
-  {
-      await fetch(`/api/registry/${curUser}/${itemIndex}/unclaim`,{
-      method: 'POST'
-    });
-  }
-  update();
-}
 
 // Unclaiming item
 async function handleDelete(itemIndex){
@@ -124,7 +128,7 @@ function PopulateClaimedItems(){
                 <img src="/trash.png" width="10" height="10" className="pic-icon" onClick={() => handleDelete(curRegistryIds[i])}/>
               </td>
               <td>
-                <img src="/checkmark.png" width="10" height="10" className="pic-icon" onClick={() => removeRegistryItem(curRegistryIds[i], curUser, setCurRegistryItems)}/>
+                <img src="/checkmark.png" width="10" height="10" className="pic-icon" onClick={() => removeRegistryItem(curRegistryIds[i], curUser, setCurRegistry)}/>
               </td>
             </tr>
       );

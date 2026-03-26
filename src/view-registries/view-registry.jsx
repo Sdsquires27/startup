@@ -27,6 +27,7 @@ async function update()
     const handler = (event) => 
     {
       if (event.type === 'ITEM_ADDED') {
+        if (event.payload.registryOwner !== curUser) return; // filter out other users
         setCurRegistry(prev => [...prev, event.payload]);
       }
       if (event.type === 'ITEM_DELETED') {

@@ -36,12 +36,15 @@ function getItems()
   }, []);
 
 async function changeRegistryItems(itemName){
-  const response = await fetch(`/api/registry/${itemName}`, {
+  const tempItem = {id: crypto.randomUUID(), name: itemName, status: null}
+  setRegistryItems(prev => [...prev, tempItem]);
+
+  const response = await fetch(`/api/registry/${encodeURIComponent(itemName)}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
   });
   const newItem = await response.json();
-  setRegistryItems(prev => [...prev, newItem]);
+  setRegistryItems(prev => prev.map(i => i.id === tempItem.id ? newItem : i));
   registryHandler.broadcastEvent('ITEM_ADDED', newItem);
 }
 

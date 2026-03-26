@@ -10,7 +10,7 @@ class RegistryHandler
   {
     let port = window.location.port;
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-    this.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}`);
+    this.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws`);
 
     this.socket.onopen = () => {
       console.log('Connected to item sync');
@@ -46,9 +46,9 @@ class RegistryHandler
 export const registryHandler = new RegistryHandler();
 
 export async function removeRegistryItem(itemIndex, username, setRegistryFunction) {
+  setRegistryFunction(prev => prev.filter(i => i.id !== itemIndex));
+  registryHandler.broadcastEvent('ITEM_DELETED', {id: itemIndex});
   await fetch(`/api/registry/${encodeURIComponent(username)}/${itemIndex}`, {
     method: 'DELETE',
   });
-  setRegistryFunction(prev => prev.filter(i => i.id !== itemIndex));
-  registryHandler.broadcastEvent('ITEM_DELETED', {id: itemIndex});
 }

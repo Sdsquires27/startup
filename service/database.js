@@ -58,6 +58,7 @@ async function removeRegistryItem(user, id)
         {
             $pull: {items: {id:id}}
         });
+
 }
 
 async function claimItem(user, id, newClaim)

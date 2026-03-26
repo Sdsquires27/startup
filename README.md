@@ -136,6 +136,6 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 - [x] **Backend listens for WebSocket connection** Set up in index.js and peerProxy.js
 - [x] **Frontend makes WebSocket connection** - Done in my-registry.jsx and view-registry.jsx
-- [x] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [x] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [x] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Data sent over WebSocket connection** - When a user adds or removes something from a registry, other users can instantly see the information update on that registry.
+- [x] **WebSocket data displayed** - see above
+- [x] **Application is fully functional** - It's all done!

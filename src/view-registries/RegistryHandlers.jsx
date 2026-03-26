@@ -46,10 +46,9 @@ class RegistryHandler
 export const registryHandler = new RegistryHandler();
 
 export async function removeRegistryItem(itemIndex, username, setRegistryFunction) {
-  console.log("Delete:", username, itemIndex);
-  await fetch(`/api/registry/${username}/${itemIndex}`, {
+  await fetch(`/api/registry/${encodeURIComponent(username)}/${itemIndex}`, {
     method: 'DELETE',
   });
-  setRegistryItems(prev => prev.filter(i => i.id !== itemIndex));
+  setRegistryFunction(prev => prev.filter(i => i.id !== itemIndex));
   registryHandler.broadcastEvent('ITEM_DELETED', {id: itemIndex});
 }

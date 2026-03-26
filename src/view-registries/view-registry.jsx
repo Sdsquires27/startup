@@ -62,14 +62,14 @@ function findUser(name){
 
     if (status === null) 
     {
-      await fetch(`/api/registry/${curUser}/${itemIndex}/claim`, { method: 'POST' });
+      await fetch(`/api/registry/${encodeURIComponent(curUser)}/${itemIndex}/claim`, { method: 'POST' });
       const updatedItem = { ...item, status: userName };
       setCurRegistry(prev => prev.map(i => i.id === itemIndex ? updatedItem : i));
       registryHandler.broadcastEvent('ITEM_CLAIMED', updatedItem);
     } 
     else 
     {
-      await fetch(`/api/registry/${curUser}/${itemIndex}/unclaim`, { method: 'POST' });
+      await fetch(`/api/registry/${encodeURIComponent(curUser)}/${itemIndex}/unclaim`, { method: 'POST' });
       const updatedItem = { ...item, status: null };
       setCurRegistry(prev => prev.map(i => i.id === itemIndex ? updatedItem : i));
       registryHandler.broadcastEvent('ITEM_CLAIMED', updatedItem);
@@ -78,7 +78,7 @@ function findUser(name){
 
 // Unclaiming item
 async function handleDelete(itemIndex){
-  await fetch(`/api/registry/${curUser}/${itemIndex}/unclaim`,{
+  await fetch(`/api/registry/${encodeURIComponent(curUser)}/${itemIndex}/unclaim`,{
       method: 'POST'
     });
   const item = curRegistry.find(i => i.id === itemIndex);

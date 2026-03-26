@@ -9,7 +9,7 @@ export function MyRegistry({userName}) {
 
 function getItems()
 {
-    fetch(`/api/registry/${userName}`)
+    fetch(`/api/registry/${encodeURIComponent(userName)}`)
       .then((response) => response.json())
       .then((items) => {
         setRegistryItems(items);
@@ -36,7 +36,7 @@ function getItems()
   }, []);
 
 async function changeRegistryItems(itemName){
-  fetch(`/api/registry/${itemName}`, {
+  const response = await fetch(`/api/registry/${itemName}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
   });
